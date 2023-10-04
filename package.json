@@ -8,5 +8,8 @@
     "client": "npm run dev --prefix client"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "react-router-dom": "^6.16.0"
+  }
 }
