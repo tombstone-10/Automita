@@ -1,17 +1,15 @@
-body {
-  background: url("./assets/images/login-bg.jpg");
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Montserrat", sans-serif;
+}
+
+.app-section {
+  background: url("./assets/images/login-bg-2.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-color: rgba(0, 0, 0, 0.2);
   background-blend-mode: darken;
   font-family: sans-serif;
-}
-
-.section {
-  display: grid;
-  position: fixed;
-  justify-content: center;
-  align-items: center;
-  margin-top: 20vh;
-  margin-left: 10vw;
+  height: 100vh;
 }

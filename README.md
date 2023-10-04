@@ -1,4 +1,4 @@
-![Logo](./client/src/assets/images/logo.jpeg)
+![Logo](./client/src/assets/png/logo-no-background.png)
 
 # Automita
 

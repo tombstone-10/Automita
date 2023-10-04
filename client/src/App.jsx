@@ -6,10 +6,8 @@ import Dashboard from "./pages/Dashboard";
 function App() {
   return (
     <>
-      <section className="section">
-        <Login />
-        {/* <Dashboard /> */}
-      </section>
+      {/* <Login /> */}
+      <Dashboard />
     </>
   );
 }

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import logo from "../assets/images/logo.jpeg";
+import logo from "../assets/png/logo-no-background.png";
 import { data } from "../data";
 import Loading from "../components/Loading";
 import "./Login.css";
@@ -23,7 +23,7 @@ const Login = () => {
       setTimeout(() => {
         setLoading(false);
         setAuth("Empty Input Fields");
-      }, 300);
+      }, 700);
       return;
     }
     if (email != user.email || password != user.password) {
@@ -53,42 +53,46 @@ const Login = () => {
 
   return (
     <>
-      <div className="container">
-        <form className="form">
-          <img src={logo} className="logo" />
-          <p className="alert">{auth}</p>
-          {isLoading && <Loading />}
-          <div className="form-row">
-            <label htmlFor="email">Login</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={email}
-              placeholder="Email Address"
-              ref={emailInputRef}
-              onChange={(e) => setEmail(e.target.value)}
-            ></input>
+      <section className="app-section">
+        <section className="login-section">
+          <div className="container">
+            <form className="form">
+              <img src={logo} className="logo" />
+              <p className="alert">{auth}</p>
+              {isLoading && <Loading />}
+              <div className="form-row">
+                <label htmlFor="email">Login</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={email}
+                  placeholder="Email Address"
+                  ref={emailInputRef}
+                  onChange={(e) => setEmail(e.target.value)}
+                ></input>
+              </div>
+              <div className="form-row">
+                <label htmlFor="password">Password</label>
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  value={password}
+                  placeholder="Password"
+                  onChange={(e) => setPassword(e.target.value)}
+                ></input>
+              </div>
+              <span className="form-entry">
+                <button type="submit" onClick={handleClick}>
+                  Login
+                </button>
+                <a href="#">Forgot Password?</a>
+              </span>
+            </form>
           </div>
-          <div className="form-row">
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={password}
-              placeholder="Password"
-              onChange={(e) => setPassword(e.target.value)}
-            ></input>
-          </div>
-          <span className="form-entry">
-            <button type="submit" onClick={handleClick}>
-              Login
-            </button>
-            <a href="#">Forgot Password?</a>
-          </span>
-        </form>
-      </div>
+        </section>
+      </section>
     </>
   );
 };

@@ -56,34 +56,50 @@ Variables
   --clr-orange-10: hsl(13, 73%, 16%);
 }
 
+.login-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
 .container {
-  padding: 2rem;
-  background-color: whitesmoke;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background-color: rgba(255, 255, 255, 0.8);
   border-radius: 5px;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
     rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+  margin-top: 8rem;
 }
 
 .form {
-  max-width: var(--fixed-width);
+  width: 250px;
   margin: 0 auto;
-  margin-bottom: 4rem;
-  padding: 1rem 5rem;
+  margin-bottom: 2rem;
+  padding: 1rem 4rem;
 }
 
 .logo {
   display: flex;
   margin-left: auto;
   margin-right: auto;
-  max-width: 300px;
+  max-width: 250px;
   margin-bottom: 1.25rem;
 }
 
 .form-row {
-  margin: 1rem 0rem;
+  padding: 0.25rem auto;
+  margin: 1.5rem 0rem;
   display: grid;
-  grid-template-columns: 100px 1fr;
+  /* grid-template-columns: 100px; */
   align-items: center;
+}
+
+.form-row label {
+  margin-bottom: 0.25rem;
 }
 
 .form input {
@@ -112,7 +128,7 @@ Variables
   font-weight: bold;
   padding: 0.5rem 1.5rem;
   text-transform: capitalize;
-  letter-spacing: 1px;
+  /* letter-spacing: 1px; */
   border-radius: var(--radius);
   cursor: pointer;
   transition: all 0.2s;
