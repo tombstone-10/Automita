@@ -8,10 +8,9 @@ const Loading = () => {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        color: "orange",
       }}
     >
-      <CircularProgress />
+      <CircularProgress style={{ color: "orange" }} />
     </Box>
   );
 };
