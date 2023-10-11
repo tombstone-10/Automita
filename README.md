@@ -12,6 +12,7 @@ Currently, there are two branches:
 ### Where to work?
 
 - Always commit to _test_ branch.
+- For backend implementation, first add the code in newly created branch _server-testing_, later after code reviews by team member push it into test branch and then main.
 
 ### When to push to main?
 
