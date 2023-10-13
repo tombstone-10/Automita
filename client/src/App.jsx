@@ -1,13 +1,17 @@
 import Login from "./pages/Login";
-import { useState } from "react";
 import "./App.css";
 import Dashboard from "./pages/Dashboard";
+import { useContext } from "react";
+import { AuthContext } from "./components/isLogedInHook";
 
+const useAuth= () => {
+  return useContext(AuthContext);
+}
 function App() {
+  const {isLoggedIn} = useAuth();
   return (
     <>
-      {/* <Login /> */}
-      <Dashboard />
+    {!isLoggedIn?<Login />:<Dashboard />}   
     </>
   );
 }

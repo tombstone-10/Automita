@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
+import {  Route, Routes } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import Generate from "../pages/Generate";
 import View from "../pages/View";
@@ -7,12 +7,12 @@ import Security from "./profile/Security";
 import About from "./profile/About";
 
 const Dashboard = () => {
+
   return (
     <>
-      <Router>
         <Sidebar>
           <Routes>
-            <Route path="/profile" index element={<General />} />
+            <Route path="/profile" index  element={<General />} />
             <Route path="/generate" element={<Generate />} />
             <Route path="/view" element={<View />} />
             <Route path="/profile/security" element={<Security />} />
@@ -20,7 +20,6 @@ const Dashboard = () => {
             <Route path="*" element={<h1>404!</h1>} />
           </Routes>
         </Sidebar>
-      </Router>
     </>
   );
 };

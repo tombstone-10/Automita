@@ -3,14 +3,28 @@ import logo from "../assets/png/logo-no-background.png";
 import { data } from "../data";
 import Loading from "../components/Loading";
 import "./Login.css";
+import axios from 'axios';
+import { useContext } from "react";
+import { AuthContext } from "../components/isLogedInHook";
+import { useNavigate } from "react-router-dom";
 
+
+const useAuth= () => {
+  return useContext(AuthContext);
+}
 const Login = () => {
   const [auth, setAuth] = useState("Authentication Required");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setLoading] = useState(false);
-  const [user, setUser] = useState(data);
+  const [user, setUser] = useState(null);
   const emailInputRef = useRef(null);
+  const {login} = useAuth();
+  const navigate = useNavigate();
+
+  const navigateToProfile = () => {
+    navigate('/profile');
+  }
 
   useEffect(() => {
     emailInputRef.current.focus();
@@ -26,25 +40,60 @@ const Login = () => {
       }, 700);
       return;
     }
-    if (email != user.email || password != user.password) {
+    // if (email != user.email || password != user.password) {
+    //   setAuth("Verifying...");
+    //   setTimeout(() => {
+    //     setLoading(false);
+    //     setAuth("Authentication Failed");
+    //   }, 1000);
+    //   resetFields();
+    //   return;
+    // }
+    // if (email == user.email && password == user.password) {
+    //   setAuth("Verifying...");
+    //   setTimeout(() => {
+    //     setLoading(false);
+    //     setAuth("Login Successful");
+    //   }, 1000);
+    //   resetFields();
+    //   return;
+    // }
+
+    loginUser();
+  };
+  const loginUser = async () => {
+    const url = 'http://localhost:5000/api/users/login';
+    try {
+      const response = await axios.post(url, { email: email, password: password });
+      const data = response.data;
+      if (data) {
+        sessionStorage.setItem('userToken', JSON.stringify(data.token));    //Storing data in sessions
+      }
+      if (data) {
+        // setUser(data);
+        setAuth("Verifying...");
+        setTimeout(() => {
+          setLoading(false);
+          setAuth("Login Successful");
+          // console.log(user);
+        }, 1000);
+        resetFields();
+        login();
+        // console.log(sessionStorage.getItem('userToken'));
+        navigateToProfile();
+      }
+
+    }
+    catch (err) {
+      // console.log(err.response.data);
       setAuth("Verifying...");
       setTimeout(() => {
         setLoading(false);
         setAuth("Authentication Failed");
       }, 1000);
       resetFields();
-      return;
     }
-    if (email == user.email && password == user.password) {
-      setAuth("Verifying...");
-      setTimeout(() => {
-        setLoading(false);
-        setAuth("Login Successful");
-      }, 1000);
-      resetFields();
-      return;
-    }
-  };
+  }
 
   const resetFields = () => {
     setEmail("");
