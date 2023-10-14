@@ -5,6 +5,15 @@ import { useEffect, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import PasswordStrengthBar from "react-password-strength-bar";
 import { Link, NavLink } from "react-router-dom";
+import { useContext } from "react";
+import { UserContext } from "../../hooks/LogedUserHook";
+import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+const useUser = () => {
+  return useContext(UserContext);
+}
 
 const Security = () => {
   const [currentPassword, setCurrentPassword] = useState("");
@@ -16,7 +25,7 @@ const Security = () => {
   const [showPasswordError, setShowPasswordError] = useState(false); // password confirmation error
   const [isConfirmPasswordOkay, setConfirmPasswordOkay] = useState(true); // we assume that password is right in confirm field\
   const [passwordAlertClass, setPasswordAlertClass] = useState("is-valid");
-
+  const { user } = useUser();
   useEffect(() => {
     if (!isConfirmPasswordOkay) {
       if (newPassword === confirmPassword) {
@@ -46,9 +55,28 @@ const Security = () => {
     }
   };
 
-  const handlePasswordSubmit = (e) => {
+  const handlePasswordSubmit = async (e) => {
     e.preventDefault();
-    
+    const url = 'http://localhost:5000/api/users/change/password';
+    try {
+      const response = await axios.patch(url, { email: user.email, oldPassword: currentPassword, newPassword: newPassword });
+      const data = response.data;
+      console.log(data)
+      if (data) {
+        toast("Password Changed Successfully");
+        setCurrentPassword("");
+        setNewPassword("");
+        setConfirmPassword("");
+      }
+    }
+    catch(err) {
+      console.log(err.response.data); 
+      toast.error("Request Failed");
+      setCurrentPassword("");
+      setNewPassword("");
+      setConfirmPassword("");
+    }
+
   }
 
   return (
@@ -109,9 +137,12 @@ const Security = () => {
             <Link to={"/profile"}>
               <button className="cancel-btn">Cancel</button>
             </Link>
-            <button type="submit" onClick={handlePasswordSubmit} className="save-btn">
-              Save
-            </button>
+            <div>
+              <button type="submit" onClick={handlePasswordSubmit} className="save-btn">
+                Save
+              </button>
+              <ToastContainer />
+            </div>
           </div>
         </form>
 
