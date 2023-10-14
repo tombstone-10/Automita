@@ -1,9 +1,15 @@
-import React from "react";
+
 import { Link, NavLink } from "react-router-dom";
 import { FaLaptop, FaShieldAlt, FaInfoCircle } from "react-icons/fa";
 import "./Tabs.css";
+import { useContext } from "react";
+import { UserContext } from "../hooks/LogedUserHook";
+const useUser = () => {
+  return useContext(UserContext);
+}
 
 const Tabs = () => {
+  const {user} = useUser();
   const profileTabs = [
     {
       path: "/profile",
@@ -24,7 +30,7 @@ const Tabs = () => {
   return (
     <>
       <div className="user-heading">
-        <h2>Hello Umar</h2>
+        <h2>Hello {user.name}</h2>
       </div>
       <div className="tabs">
         {profileTabs.map((item, index) => {

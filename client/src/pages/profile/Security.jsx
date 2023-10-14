@@ -46,6 +46,11 @@ const Security = () => {
     }
   };
 
+  const handlePasswordSubmit = (e) => {
+    e.preventDefault();
+    
+  }
+
   return (
     <>
       <Tabs />
@@ -104,7 +109,7 @@ const Security = () => {
             <Link to={"/profile"}>
               <button className="cancel-btn">Cancel</button>
             </Link>
-            <button type="submit" className="save-btn">
+            <button type="submit" onClick={handlePasswordSubmit} className="save-btn">
               Save
             </button>
           </div>

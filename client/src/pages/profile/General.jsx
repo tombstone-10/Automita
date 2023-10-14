@@ -1,49 +1,24 @@
 import Tabs from "../../components/Tabs";
+import { useContext } from "react";
 import "./Profile.css";
 import bg from "../../assets/images/profile.svg";
-import axios from "axios";
 import { toast } from 'react-toastify';
-
+import { UserContext } from "../../hooks/LogedUserHook";
 import 'react-toastify/dist/ReactToastify.css';
 
+const useUser = () => {
+  return useContext(UserContext);
+}
 
 const General = () => {
-  let name = "Umar Rasheed";
-  let email = "201271@students.au.edu.pk";
-  let role = "Student";
-  let department = "Creative Technologies";
-  let organization = "Air University";
-
-  const getMe = async () => {
-    const url = 'http://localhost:5000/api/users/me';
-    try {
-      const id = sessionStorage.getItem('userToken');
-      if (id) {
-        console.log(id);
-        const response = await axios.get(url, {
-          params: {
-            id: id
-          }
-        });
-        console.log(response);
-        const data = response.data;
-        console.log(data);
-        if (data) {
-          name, email, role, department = data;
-        }
-      }
-      else {
-        toast.error("You are not authorized!", {
-          position: toast.POSITION.TOP_RIGHT
-        });
-      }
-    }
-    catch (err) {
-      console.log(err.response.data);
-      toast.error("You are not authorized!", {
-        position: toast.POSITION.TOP_RIGHT
-      });
-    }
+  // let name = "Umar Rasheed";
+  // let email = "201271@students.au.edu.pk";
+  // let role = "Student";
+  // let department = "Creative Technologies";
+  // let organization = "Air University";
+  const {user} = useUser();
+  if(user == null){
+    return <h1>You are not authorized.</h1>
   }
 
   return (
@@ -57,7 +32,7 @@ const General = () => {
               type="text"
               id="name"
               name="name"
-              value={name}
+              value={user.name}
               disabled
             ></input>
           </div>
@@ -67,7 +42,7 @@ const General = () => {
               type="email"
               id="email"
               name="email"
-              value={email}
+              value={user.email}
               disabled
             ></input>
           </div>
@@ -77,7 +52,7 @@ const General = () => {
               type="text"
               id="role"
               name="role"
-              value={role}
+              value={user.role}
               disabled
             ></input>
           </div>
@@ -87,7 +62,7 @@ const General = () => {
               type="text"
               id="department"
               name="department"
-              value={department}
+              value={user.department}
               disabled
             ></input>
           </div>
@@ -97,7 +72,7 @@ const General = () => {
               type="text"
               id="organization"
               name="organization"
-              value={organization}
+              value={user.organization}
               disabled
             ></input>
           </div>
@@ -106,7 +81,6 @@ const General = () => {
           <img src={bg}></img>
         </div>
       </div>
-      <button onClick={getMe}>Get Request</button>
     </>
   );
 };

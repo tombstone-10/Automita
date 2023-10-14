@@ -5,9 +5,17 @@ import View from "../pages/View";
 import General from "./profile/General";
 import Security from "./profile/Security";
 import About from "./profile/About";
+import { useContext } from "react";
+import { UserContext } from "../hooks/LogedUserHook";
 
+const useUser = () => {
+  return useContext(UserContext);
+}
 const Dashboard = () => {
-
+  const {user} = useUser();
+  if(user == null) {
+    return <h1>You are not Authorized.</h1>
+  }
   return (
     <>
         <Sidebar>

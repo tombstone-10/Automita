@@ -1,23 +1,26 @@
 import { useEffect, useRef, useState } from "react";
 import logo from "../assets/png/logo-no-background.png";
-import { data } from "../data";
 import Loading from "../components/Loading";
 import "./Login.css";
 import axios from 'axios';
 import { useContext } from "react";
-import { AuthContext } from "../components/isLogedInHook";
+import { AuthContext } from "../hooks/isLogedInHook";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../hooks/LogedUserHook";
 
 
 const useAuth= () => {
   return useContext(AuthContext);
+}
+const useUser = () => {
+  return useContext(UserContext);
 }
 const Login = () => {
   const [auth, setAuth] = useState("Authentication Required");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setLoading] = useState(false);
-  const [user, setUser] = useState(null);
+  const {setuser} = useUser();
   const emailInputRef = useRef(null);
   const {login} = useAuth();
   const navigate = useNavigate();
@@ -70,7 +73,7 @@ const Login = () => {
         sessionStorage.setItem('userToken', JSON.stringify(data.token));    //Storing data in sessions
       }
       if (data) {
-        // setUser(data);
+        setuser(data);
         setAuth("Verifying...");
         setTimeout(() => {
           setLoading(false);
@@ -86,6 +89,7 @@ const Login = () => {
     }
     catch (err) {
       // console.log(err.response.data);
+      setuser(null);
       setAuth("Verifying...");
       setTimeout(() => {
         setLoading(false);
