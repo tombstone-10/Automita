@@ -15,7 +15,7 @@ const protect = asyncHandler(async (req, res, next) => {
       token = req.query.id;
       console.log(token);
       // Verify token
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);  
+      const decoded = jwt.verify(JSON.parse(token), process.env.JWT_SECRET);  
       
 
       // Get user from the token

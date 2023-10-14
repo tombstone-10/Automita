@@ -2,7 +2,6 @@ import Tabs from "../../components/Tabs";
 import { useContext } from "react";
 import "./Profile.css";
 import bg from "../../assets/images/profile.svg";
-import { toast } from 'react-toastify';
 import { UserContext } from "../../hooks/LogedUserHook";
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -16,6 +15,8 @@ const General = () => {
   // let role = "Student";
   // let department = "Creative Technologies";
   // let organization = "Air University";
+
+  
   const {user} = useUser();
   if(user == null){
     return <h1>You are not authorized.</h1>

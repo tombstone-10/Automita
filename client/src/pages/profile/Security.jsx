@@ -60,17 +60,15 @@ const Security = () => {
     const url = 'http://localhost:5000/api/users/change/password';
     try {
       const response = await axios.patch(url, { email: user.email, oldPassword: currentPassword, newPassword: newPassword });
-      const data = response.data;
-      console.log(data)
-      if (data) {
-        toast("Password Changed Successfully");
+      if (response) {
+        toast.success("Password Changed Successfully");
         setCurrentPassword("");
         setNewPassword("");
         setConfirmPassword("");
       }
     }
-    catch(err) {
-      console.log(err.response.data); 
+    catch (err) {
+      console.log(err.response.data);
       toast.error("Request Failed");
       setCurrentPassword("");
       setNewPassword("");
@@ -78,7 +76,6 @@ const Security = () => {
     }
 
   }
-
   return (
     <>
       <Tabs />
