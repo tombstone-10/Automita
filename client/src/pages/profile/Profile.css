@@ -27,6 +27,7 @@
   display: flex;
   margin-bottom: 1rem;
   align-items: center;
+  margin-top: 1rem;
 }
 
 .password-row p {
@@ -146,4 +147,40 @@
 
 .bg-container img {
   width: 100%;
+}
+
+/* profile page */
+
+.profile-intro-row {
+  display: flex;
+  align-items: center;
+}
+
+.profile-heading {
+  letter-spacing: 1px;
+  margin-bottom: 2rem;
+}
+
+.profile-box {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.profile-box-icon {
+  display: flex;
+  padding: 0.35rem;
+  background: rgba(255, 166, 0, 0.39);
+  margin-right: 1rem;
+  border-radius: 20px;
+  border: 1px solid orange;
+}
+
+.profile-box svg {
+  font-size: 15px;
+  color: orange;
+}
+
+.profile-box p {
+  font-size: 15px;
 }
