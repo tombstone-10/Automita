@@ -6,7 +6,7 @@ import "./Tabs.css";
 const Tabs = () => {
   const profileTabs = [
     {
-      path: "/profile",
+      path: "/profile/general",
       name: "General",
       icon: <FaLaptop />,
     },
@@ -21,19 +21,20 @@ const Tabs = () => {
       icon: <FaInfoCircle />,
     },
   ];
+
   return (
     <>
       <div className="user-heading">
-        <h2>Hello Ali</h2>
+        <h2>Hello Ali,</h2>
       </div>
       <div className="tabs">
         {profileTabs.map((item, index) => {
           return (
             <>
-              <Link to={item.path} key={index} className="tab-item">
+              <NavLink to={item.path} key={index} className="tab-item">
                 <div className="tab-icon">{item.icon}</div>
                 <div>{item.name}</div>
-              </Link>
+              </NavLink>
             </>
           );
         })}

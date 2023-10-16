@@ -8,6 +8,7 @@ const General = () => {
   const role = "Student";
   const department = "Creative Technologies";
   const organization = "Air University";
+
   return (
     <>
       <Tabs />
