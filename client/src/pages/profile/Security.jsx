@@ -4,7 +4,7 @@ import bg from "../../assets/images/profile.svg";
 import { useEffect, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import PasswordStrengthBar from "react-password-strength-bar";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Security = () => {
   const [currentPassword, setCurrentPassword] = useState("");

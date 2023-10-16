@@ -5,6 +5,7 @@ import View from "../pages/View";
 import General from "./profile/General";
 import Security from "./profile/Security";
 import About from "./profile/About";
+import Profile from "./profile/Profile";
 
 const Dashboard = () => {
   return (
@@ -12,7 +13,8 @@ const Dashboard = () => {
       <Router>
         <Sidebar>
           <Routes>
-            <Route path="/profile" index element={<General />} />
+            <Route path="/profile/general" index element={<General />} />
+            <Route path="/profile" element={<Profile />} />
             <Route path="/generate" element={<Generate />} />
             <Route path="/view" element={<View />} />
             <Route path="/profile/security" element={<Security />} />
