@@ -104,6 +104,8 @@
 }
 
 .save-btn {
+  display: flex;
+  align-items: center;
   margin-left: 1.5rem;
   background: orange;
   border-color: transparent;
@@ -116,6 +118,11 @@
   cursor: pointer;
   font-weight: 600;
   transition: all 0.3s;
+}
+
+.save-btn svg {
+  margin-left: 0.5rem;
+  font-size: 15px;
 }
 
 .save-btn:hover {

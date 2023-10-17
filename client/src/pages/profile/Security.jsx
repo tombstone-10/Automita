@@ -2,7 +2,7 @@ import Tabs from "../../components/Tabs";
 import "./Profile.css";
 import bg from "../../assets/images/profile.svg";
 import { useEffect, useState } from "react";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { FaEye, FaEyeSlash, FaFile } from "react-icons/fa";
 import PasswordStrengthBar from "react-password-strength-bar";
 import { Link } from "react-router-dom";
 import { profileTabs } from "../TabsData";
@@ -108,7 +108,7 @@ const Security = () => {
               <button className="cancel-btn">Cancel</button>
             </Link>
             <button type="submit" className="save-btn">
-              Save
+              Save <FaFile />
             </button>
           </div>
         </form>

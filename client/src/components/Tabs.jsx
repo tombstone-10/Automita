@@ -3,10 +3,10 @@ import { Link, NavLink } from "react-router-dom";
 import "./Tabs.css";
 import { FaLaptop, FaShieldAlt, FaInfoCircle } from "react-icons/fa";
 
-const Tabs = ({ tabs }) => {
+const Tabs = ({ tabs, parentName }) => {
   return (
     <>
-      <div className="tabs">
+      <div className={parentName === "generate" ? "tabs-generate" : "tabs"}>
         {tabs.map((item, index) => {
           return (
             <>
