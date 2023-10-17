@@ -19,6 +19,16 @@
   padding: 0.5rem;
 }
 
+.tabs-generate {
+  display: flex;
+  margin-top: 0rem;
+  background: #36454f;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+  border-radius: 6px;
+  padding: 0.5rem;
+}
+
 .tab-item {
   display: flex;
   padding: 0.75rem 2rem;

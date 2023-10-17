@@ -4,7 +4,7 @@ import { generateTabs } from "../TabsData";
 const Generate = () => {
   return (
     <>
-      <Tabs tabs={generateTabs} />
+      <Tabs tabs={generateTabs} parentName="generate" />
       <h2>Generate Timetable</h2>
     </>
   );
