@@ -20,46 +20,48 @@ const Profile = () => {
       <UserHeading />
       <Tabs tabs={profileTabs} />
       <div className="profile-container">
-        <div className="profile-form">
-          <h2 className="profile-heading">Let's get started!</h2>
-          <div className="profile-intro-row">
-            <div className="profile-box">
-              <div className="profile-box-icon">
-                <FaCheck />
+        <div className="profile-sub-container">
+          <div className="profile-form">
+            <h2 className="profile-heading">Let's get started!</h2>
+            <div className="profile-intro-row">
+              <div className="profile-box">
+                <div className="profile-box-icon">
+                  <FaCheck />
+                </div>
+                <p>Add courses, teachers, programs.</p>
               </div>
-              <p>Add courses, teachers, programs.</p>
+            </div>
+            <div className="profile-intro-row">
+              <div className="profile-box">
+                <div className="profile-box-icon">
+                  <FaCheck />
+                </div>
+                <p>Assign the courses, teachers to programs.</p>
+              </div>
+            </div>
+            <div className="profile-intro-row">
+              <div className="profile-box">
+                <div className="profile-box-icon">
+                  <FaCheck />
+                </div>
+                <p>Simply generate timetable.</p>
+              </div>
+            </div>
+            <div className="profile-intro-row">
+              <div className="profile-box">
+                <div className="profile-box-icon">
+                  <FaCheck />
+                </div>
+                <p>
+                  View the timetable with respect to programs, classrooms,
+                  teachers.
+                </p>
+              </div>
             </div>
           </div>
-          <div className="profile-intro-row">
-            <div className="profile-box">
-              <div className="profile-box-icon">
-                <FaCheck />
-              </div>
-              <p>Assign the courses, teachers to programs.</p>
-            </div>
+          <div className="bg-container">
+            <Lottie options={defaultOptions} height={300} width={600} />
           </div>
-          <div className="profile-intro-row">
-            <div className="profile-box">
-              <div className="profile-box-icon">
-                <FaCheck />
-              </div>
-              <p>Simply generate timetable.</p>
-            </div>
-          </div>
-          <div className="profile-intro-row">
-            <div className="profile-box">
-              <div className="profile-box-icon">
-                <FaCheck />
-              </div>
-              <p>
-                View the timetable with respect to programs, classrooms,
-                teachers.
-              </p>
-            </div>
-          </div>
-        </div>
-        <div className="bg-container">
-          <Lottie options={defaultOptions} height={300} width={600} />
         </div>
       </div>
     </>

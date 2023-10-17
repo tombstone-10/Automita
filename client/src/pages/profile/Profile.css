@@ -191,3 +191,8 @@
 .profile-box p {
   font-size: 15px;
 }
+
+.profile-sub-container {
+  display: flex;
+  margin-top: 2rem;
+}
