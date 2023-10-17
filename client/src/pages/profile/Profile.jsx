@@ -3,6 +3,8 @@ import Lottie from "react-lottie";
 import "./Profile.css";
 import gif from "../../assets/gif/profile-gif.json";
 import { FaCheck } from "react-icons/fa";
+import { profileTabs } from "../TabsData";
+import UserHeading from "../../components/UserHeading";
 
 const Profile = () => {
   const defaultOptions = {
@@ -15,7 +17,8 @@ const Profile = () => {
   };
   return (
     <>
-      <Tabs />
+      <UserHeading />
+      <Tabs tabs={profileTabs} />
       <div className="profile-container">
         <div className="profile-form">
           <h2 className="profile-heading">Let's get started!</h2>

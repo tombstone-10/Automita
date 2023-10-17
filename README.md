@@ -60,4 +60,4 @@ npm run server
 
 - http://localhost:5173/
 
-Rest of instructions and content is in the INSTRUCTIONS.md
+Keep checking issues for updates on any bugs or problems.

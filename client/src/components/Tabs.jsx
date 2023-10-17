@@ -1,34 +1,13 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
-import { FaLaptop, FaShieldAlt, FaInfoCircle } from "react-icons/fa";
 import "./Tabs.css";
+import { FaLaptop, FaShieldAlt, FaInfoCircle } from "react-icons/fa";
 
-const Tabs = () => {
-  const profileTabs = [
-    {
-      path: "/profile/general",
-      name: "General",
-      icon: <FaLaptop />,
-    },
-    {
-      path: "/profile/security",
-      name: "Security",
-      icon: <FaShieldAlt />,
-    },
-    {
-      path: "/profile/about",
-      name: "About",
-      icon: <FaInfoCircle />,
-    },
-  ];
-
+const Tabs = ({ tabs }) => {
   return (
     <>
-      <div className="user-heading">
-        <h2>Hello Ali,</h2>
-      </div>
       <div className="tabs">
-        {profileTabs.map((item, index) => {
+        {tabs.map((item, index) => {
           return (
             <>
               <NavLink to={item.path} key={index} className="tab-item">

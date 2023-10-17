@@ -1,6 +1,8 @@
 import Tabs from "../../components/Tabs";
 import "./Profile.css";
 import bg from "../../assets/images/profile.svg";
+import { profileTabs } from "../TabsData";
+import UserHeading from "../../components/UserHeading";
 
 const General = () => {
   const name = "Ali Ahmed";
@@ -11,7 +13,8 @@ const General = () => {
 
   return (
     <>
-      <Tabs />
+      <UserHeading />
+      <Tabs tabs={profileTabs} />
       <div className="profile-container">
         <form className="profile-form">
           <div className="profile-form-row">

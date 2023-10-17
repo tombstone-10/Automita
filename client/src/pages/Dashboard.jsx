@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
-import Generate from "../pages/Generate";
+import Generate from "./generate/Generate";
 import View from "../pages/View";
 import General from "./profile/General";
 import Security from "./profile/Security";
