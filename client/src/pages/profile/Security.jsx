@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import PasswordStrengthBar from "react-password-strength-bar";
 import { Link } from "react-router-dom";
+import { profileTabs } from "../TabsData";
+import UserHeading from "../../components/UserHeading";
 
 const Security = () => {
   const [currentPassword, setCurrentPassword] = useState("");
@@ -48,7 +50,8 @@ const Security = () => {
 
   return (
     <>
-      <Tabs />
+      <UserHeading />
+      <Tabs tabs={profileTabs} />
       <div className="profile-container">
         <form className="profile-form">
           <div className="password-row">
