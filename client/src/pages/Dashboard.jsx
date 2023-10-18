@@ -7,7 +7,7 @@ import Security from "./profile/Security";
 import About from "./profile/About";
 import { useContext } from "react";
 import { UserContext } from "../hooks/LogedUserHook";
-
+import Logout from "./Logout";
 const useUser = () => {
   return useContext(UserContext);
 }
@@ -25,11 +25,11 @@ const Dashboard = () => {
             <Route path="/view" element={<View />} />
             <Route path="/profile/security" element={<Security />} />
             <Route path="/profile/about" element={<About />} />
+            <Route path="/logout" element={<Logout/>} />
             <Route path="*" element={<h1>404!</h1>} />
           </Routes>
         </Sidebar>
     </>
   );
 };
-
 export default Dashboard;

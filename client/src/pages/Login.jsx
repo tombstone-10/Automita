@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import logo from "../assets/png/logo-no-background.png";
 import Loading from "../components/Loading";
 import "./Login.css";
@@ -9,20 +9,23 @@ import { useNavigate } from "react-router-dom";
 import { UserContext } from "../hooks/LogedUserHook";
 
 
-const useAuth= () => {
+
+const useAuth = () => {
   return useContext(AuthContext);
 }
 const useUser = () => {
   return useContext(UserContext);
 }
 const Login = () => {
+  let storedToken = null;
   const [auth, setAuth] = useState("Authentication Required");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setLoading] = useState(false);
-  const {setuser} = useUser();
+  const [notRender, setNotRender] = useState(false);
+  const { setuser } = useUser();
   const emailInputRef = useRef(null);
-  const {login} = useAuth();
+  const { login, logout } = useAuth();
   const navigate = useNavigate();
 
   const navigateToProfile = () => {
@@ -64,16 +67,44 @@ const Login = () => {
 
     loginUser();
   };
-  const loginUser = async () => {
-    const url = 'http://localhost:5000/api/users/login';
+  const HandleSessions = async (storedToken) => {
+    const urlme = 'http://localhost:5000/api/users/me';
     try {
-      const response = await axios.post(url, { email: email, password: password });
+      let id = null;
+      if (storedToken) {
+        id = JSON.parse(storedToken)
+      }
+      const res = await axios.post(urlme, { id: id });
+      setuser(res.data);
+      return true;
+
+    }
+    catch (err) {
+      setuser(null);
+      return false;
+    }
+  }
+  const fetchData = async () => {
+    storedToken = sessionStorage.getItem('userToken');
+    if (storedToken) {
+      setNotRender(true);
+      const session = await HandleSessions(storedToken);
+      setNotRender(false);
+      if (session === true) {
+        login();
+      } else {
+        console.log('false');
+        logout();
+      }
+    }
+  }
+  const loginUser = async () => {
+    const urlLogin = 'http://localhost:5000/api/users/login';
+    try {
+      const response = await axios.post(urlLogin, { email: email, password: password });
       const data = response.data;
       if (data) {
         sessionStorage.setItem('userToken', JSON.stringify(data.token));    //Storing data in sessions
-      }
-      if (data) {
-        setuser(data);
         setAuth("Verifying...");
         setTimeout(() => {
           setLoading(false);
@@ -81,7 +112,8 @@ const Login = () => {
           // console.log(user);
         }, 1000);
         resetFields();
-        login();
+        fetchData();
+        
         // console.log(sessionStorage.getItem('userToken'));
         navigateToProfile();
       }
@@ -89,7 +121,6 @@ const Login = () => {
     }
     catch (err) {
       // console.log(err.response.data);
-      setuser(null);
       setAuth("Verifying...");
       setTimeout(() => {
         setLoading(false);
@@ -103,7 +134,14 @@ const Login = () => {
     setEmail("");
     setPassword("");
   };
-
+  useLayoutEffect(() => { 
+    fetchData();
+  }, []);
+  if(notRender === true) {
+    return (
+      <Loading/>
+    )
+  }
   return (
     <>
       <section className="app-section">

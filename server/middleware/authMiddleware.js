@@ -4,19 +4,17 @@ const User = require('../models/userModel')
 
 const protect = asyncHandler(async (req, res, next) => {
   let token
-
+  const {id} = req.body;
   if (
-    req.query.id
+    id
   )
   {
     try {
 
       // Get token from query parameters
-      token = req.query.id;
-      console.log(token);
+      token = id;
       // Verify token
-      const decoded = jwt.verify(JSON.parse(token), process.env.JWT_SECRET);  
-      
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);  
 
       // Get user from the token
       req.user = await User.findById(decoded.id).select('-password')

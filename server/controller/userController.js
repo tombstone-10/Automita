@@ -5,6 +5,8 @@ const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
 
 const JWT_SECRET = process.env.JWT_SECRET;
+// const sessions = {};
+
 const generateToken = (id) => {
     return jwt.sign({ id }, JWT_SECRET, { expiresIn: '1h' });
 };
@@ -79,13 +81,16 @@ const loginUser = asyncHandler(async (req, res) => {
     const usr = await User.findOne({ email });
     if (usr && (await bcrypt.compare(password, usr.password))) {
         const token = generateToken(usr._id);
+        // const userID = usr._id;
+        // sessions[token] = {email, userID};
+        // res.set('Set-Cookie', `session=${token}`);
         return res.status(200).json({
             name: usr.name,
             email: usr.email,
             department: usr.department,
             role: usr.role,
             organization: usr.organization,
-            token,
+            token
         });
     } else {
         return res.status(401).json({ error: 'Invalid Credentials' });
@@ -102,6 +107,27 @@ const getMe = asyncHandler(async (req, res) => {
 
     res.status(200).json(req.user)
 })
+
+// const getuser = asyncHandler(async (req, res) => {
+//     const token = req.headers.cookie.split('=')[1];
+//     const userSession = sessions[token];
+//     if(!userSession){
+//         return res.status(401).json({ error: 'Invalid Session' });
+//     }
+//     const email = userSession.email;
+//     const usr = await User.findOne({ email });
+//     if(usr){
+//         const token = generateToken(usr._id);
+//         return res.status(200).json({
+//             name: usr.name,
+//             email: usr.email,
+//             department: usr.department,
+//             role: usr.role,
+//             organization: usr.organization,
+//             token
+//         });
+//     }
+// });
 
 // @Description    Patch change password of logged user
 // @route          /api/users/change/password

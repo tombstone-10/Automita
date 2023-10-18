@@ -30,7 +30,7 @@ const Tabs = () => {
   return (
     <>
       <div className="user-heading">
-        <h2>Hello {user.name}</h2>
+        <h2>Hello {user.name},</h2>
       </div>
       <div className="tabs">
         {profileTabs.map((item, index) => {
