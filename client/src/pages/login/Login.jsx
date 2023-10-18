@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import logo from "../assets/png/logo-no-background.png";
-import { data } from "../data";
-import Loading from "../components/Loading";
+import logo from "../../assets/png/logo-no-background.png";
+import Loading from "../../components/Loading";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import "./Login.css";
 

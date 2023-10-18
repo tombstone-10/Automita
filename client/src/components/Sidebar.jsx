@@ -72,7 +72,7 @@ const Sidebar = ({ children }) => {
         </div>
       </div>
 
-      <main>
+      <main className="main-content">
         {/* {isLoading ? (
           <div className="loading">
             <Loading />

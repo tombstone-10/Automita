@@ -2,11 +2,16 @@
   text-decoration: none;
 }
 
+html {
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
+
 .sidebar-container {
   display: flex;
 }
 
-main {
+.main-content {
   width: 100%;
   padding: 2rem;
   background: radial-gradient(
@@ -14,6 +19,7 @@ main {
     rgb(250, 250, 250) 0%,
     rgb(225, 234, 238) 90%
   );
+  overflow-y: hidden;
 }
 
 .sidebar {

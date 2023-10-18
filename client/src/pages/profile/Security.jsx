@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { FaEye, FaEyeSlash, FaFile } from "react-icons/fa";
 import PasswordStrengthBar from "react-password-strength-bar";
 import { Link } from "react-router-dom";
-import { profileTabs } from "../TabsData";
+import { profileTabs } from "../../data/TabsData";
 import UserHeading from "../../components/UserHeading";
 
 const Security = () => {
