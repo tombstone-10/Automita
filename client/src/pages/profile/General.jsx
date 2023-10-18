@@ -1,7 +1,7 @@
 import Tabs from "../../components/Tabs";
 import "./Profile.css";
 import bg from "../../assets/images/profile.svg";
-import { profileTabs } from "../TabsData";
+import { profileTabs } from "../../data/TabsData";
 import UserHeading from "../../components/UserHeading";
 
 const General = () => {

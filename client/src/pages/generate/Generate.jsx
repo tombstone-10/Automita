@@ -1,11 +1,13 @@
+import DefaultPage from "../../components/DefaultPage";
 import Tabs from "../../components/Tabs";
-import { generateTabs } from "../TabsData";
+import { generateTabs } from "../../data/TabsData";
+import { generatePage } from "../../data/PageData";
 
 const Generate = () => {
   return (
     <>
-      <Tabs tabs={generateTabs} parentName="generate" />
-      <h2>Generate Timetable</h2>
+      <Tabs tabs={generateTabs} />
+      <DefaultPage currentPage={generatePage} />
     </>
   );
 };
