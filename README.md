@@ -58,6 +58,20 @@ npm install
 npm run server
 ```
 
+### Run App (Full)
+
+- To install dependencies in your local machine:
+
+```
+npm install
+```
+
+- To run the application's client and server site together (this does not include setting up Atlas and running MongoDB):
+
+```
+npm run dev
+```
+
 - http://localhost:5173/
 
-Rest of instructions and content is in the INSTRUCTIONS.md
+Keep checking issues for updates on any bugs or problems.

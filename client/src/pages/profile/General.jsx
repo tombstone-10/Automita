@@ -2,6 +2,8 @@ import Tabs from "../../components/Tabs";
 import { useContext } from "react";
 import "./Profile.css";
 import bg from "../../assets/images/profile.svg";
+import { profileTabs } from "../../data/TabsData";
+import UserHeading from "../../components/UserHeading";
 import { UserContext } from "../../hooks/LogedUserHook";
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -10,21 +12,19 @@ const useUser = () => {
 }
 
 const General = () => {
-  // let name = "Umar Rasheed";
-  // let email = "201271@students.au.edu.pk";
-  // let role = "Student";
-  // let department = "Creative Technologies";
-  // let organization = "Air University";
-
-  
+  // const name = "Umar Rasheed";
+  // const email = "201271@students.au.edu.pk";
+  // const role = "Student";
+  // const department = "Creative Technologies";
+  // const organization = "Air University";
   const {user} = useUser();
   if(user == null){
     return <h1>You are not authorized.</h1>
   }
-
   return (
     <>
-      <Tabs />
+      <UserHeading />
+      <Tabs tabs={profileTabs} />
       <div className="profile-container">
         <form className="profile-form">
           <div className="profile-form-row">

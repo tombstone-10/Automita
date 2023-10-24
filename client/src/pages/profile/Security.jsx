@@ -2,14 +2,16 @@ import Tabs from "../../components/Tabs";
 import "./Profile.css";
 import bg from "../../assets/images/profile.svg";
 import { useEffect, useState } from "react";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { FaEye, FaEyeSlash, FaFile } from "react-icons/fa";
 import PasswordStrengthBar from "react-password-strength-bar";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { profileTabs } from "../../data/TabsData";
+import UserHeading from "../../components/UserHeading";
 import { useContext } from "react";
-import { UserContext } from "../../hooks/LogedUserHook";
 import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { UserContext } from "../../hooks/LogedUserHook";
 
 const useUser = () => {
   return useContext(UserContext);
@@ -54,7 +56,6 @@ const Security = () => {
       setPasswordState("Show Password");
     }
   };
-
   const handlePasswordSubmit = async (e) => {
     e.preventDefault();
     const url = 'http://localhost:5000/api/users/change/password';
@@ -75,10 +76,12 @@ const Security = () => {
       setConfirmPassword("");
     }
 
-  }
+  };
+
   return (
     <>
-      <Tabs />
+      <UserHeading />
+      <Tabs tabs={profileTabs} />
       <div className="profile-container">
         <form className="profile-form">
           <div className="password-row">
@@ -136,7 +139,7 @@ const Security = () => {
             </Link>
             <div>
               <button type="submit" onClick={handlePasswordSubmit} className="save-btn">
-                Save
+                Save <FaFile />
               </button>
               <ToastContainer />
             </div>

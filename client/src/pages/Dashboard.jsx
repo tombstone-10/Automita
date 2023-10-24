@@ -1,13 +1,15 @@
-import {  Route, Routes } from "react-router-dom";
+import { Route, Routes} from "react-router-dom";
 import Sidebar from "../components/Sidebar";
-import Generate from "../pages/Generate";
+import Generate from "./generate/Generate";
 import View from "../pages/View";
 import General from "./profile/General";
 import Security from "./profile/Security";
 import About from "./profile/About";
+import Profile from "./profile/Profile";
 import { useContext } from "react";
 import { UserContext } from "../hooks/LogedUserHook";
-import Logout from "./Logout";
+import Logout from "../components/Logout";
+
 const useUser = () => {
   return useContext(UserContext);
 }
@@ -16,11 +18,13 @@ const Dashboard = () => {
   if(user == null) {
     return <h1>You are not Authorized.</h1>
   }
+
   return (
     <>
         <Sidebar>
           <Routes>
-            <Route path="/profile" index  element={<General />} />
+            <Route path="/profile/general" index element={<General />} />
+            <Route path="/profile" element={<Profile />} />
             <Route path="/generate" element={<Generate />} />
             <Route path="/view" element={<View />} />
             <Route path="/profile/security" element={<Security />} />
@@ -32,4 +36,5 @@ const Dashboard = () => {
     </>
   );
 };
+
 export default Dashboard;

@@ -1,13 +1,38 @@
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+  /* border-radius: 10px; */
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 166, 0, 0.479);
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: orange;
+}
+
 .profile-container {
   display: flex;
   justify-content: center;
-  align-items: center;
   padding: 2rem 2rem 8rem 2rem;
+  height: 50vh;
   background: white;
   box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
     rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
-  /* margin-top: 2rem; */
   border-radius: 0px 0px 6px 6px;
+  max-height: 50vh;
+  overflow-y: scroll !important;
+  overflow-x: scroll;
 }
 
 .profile-form {
@@ -27,6 +52,7 @@
   display: flex;
   margin-bottom: 1rem;
   align-items: center;
+  margin-top: 1rem;
 }
 
 .password-row p {
@@ -103,6 +129,8 @@
 }
 
 .save-btn {
+  display: flex;
+  align-items: center;
   margin-left: 1.5rem;
   background: orange;
   border-color: transparent;
@@ -115,6 +143,11 @@
   cursor: pointer;
   font-weight: 600;
   transition: all 0.3s;
+}
+
+.save-btn svg {
+  margin-left: 0.5rem;
+  font-size: 15px;
 }
 
 .save-btn:hover {
@@ -142,8 +175,51 @@
 .bg-container {
   display: flex;
   width: 40%;
+  justify-content: center;
+  align-items: flex-end;
 }
 
 .bg-container img {
   width: 100%;
+}
+
+/* profile page */
+
+.profile-intro-row {
+  display: flex;
+  align-items: center;
+}
+
+.profile-heading {
+  letter-spacing: 1px;
+  margin-bottom: 2rem;
+}
+
+.profile-box {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.profile-box-icon {
+  display: flex;
+  padding: 0.35rem;
+  background: rgba(255, 166, 0, 0.39);
+  margin-right: 1rem;
+  border-radius: 20px;
+  border: 1px solid orange;
+}
+
+.profile-box svg {
+  font-size: 15px;
+  color: orange;
+}
+
+.profile-box p {
+  font-size: 15px;
+}
+
+.profile-sub-container {
+  display: flex;
+  margin-top: 2rem;
 }

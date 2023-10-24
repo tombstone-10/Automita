@@ -102,22 +102,34 @@ Variables
   margin-bottom: 0.25rem;
 }
 
-.form input {
-  /* background: var(--clr-primary-9); */
-  background: rgba(255, 166, 0, 0.39);
+.input-container {
+  display: flex;
+  align-items: center;
+  background: transparent;
   border-color: transparent;
   border-radius: var(--radius);
   padding: 0.5rem 0.5rem;
   width: 15rem;
+  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
+    rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+}
+
+.form-input {
+  /* background: var(--clr-primary-9); */
+  background-color: transparent;
+  border-color: transparent;
+  border-radius: var(--radius);
+  width: 15rem;
 }
 
 .form input:focus {
-  box-shadow: 0 0 4px rgb(107, 99, 84);
   outline: none;
+  background: transparent;
 }
 
 .form-entry {
   display: flex;
+  margin-top: 1rem;
 }
 
 .form-entry button {
@@ -136,7 +148,6 @@ Variables
 
 .form-entry button:hover {
   background: rgba(255, 166, 0, 0.705);
-  color: black;
 }
 
 .form-entry a {
@@ -154,6 +165,29 @@ Variables
   color: red;
   text-align: center;
   margin-bottom: 1.5rem;
+}
+
+.password-toggle {
+  cursor: pointer;
+  color: black;
+}
+
+.remember-container {
+  display: flex;
+}
+
+.remember-container label {
+  display: flex;
+}
+
+.remember-me {
+  width: 15px;
+  margin-right: 0.5rem;
+  cursor: pointer;
+}
+
+.keep {
+  font-size: 15px;
 }
 
 @media screen and (max-width: 1000px) {

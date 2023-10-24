@@ -1,14 +1,13 @@
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import logo from "../assets/png/logo-no-background.png";
-import Loading from "../components/Loading";
+import { useEffect,useLayoutEffect, useRef, useState } from "react";
+import logo from "../../assets/png/logo-no-background.png";
+import Loading from "../../components/Loading";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import "./Login.css";
 import axios from 'axios';
 import { useContext } from "react";
-import { AuthContext } from "../hooks/isLogedInHook";
+import { AuthContext } from "../../hooks/isLogedInHook";
 import { useNavigate } from "react-router-dom";
-import { UserContext } from "../hooks/LogedUserHook";
-
-
+import { UserContext } from "../../hooks/LogedUserHook";
 
 const useAuth = () => {
   return useContext(AuthContext);
@@ -16,6 +15,7 @@ const useAuth = () => {
 const useUser = () => {
   return useContext(UserContext);
 }
+
 const Login = () => {
   let storedToken = null;
   const [auth, setAuth] = useState("Authentication Required");
@@ -25,6 +25,8 @@ const Login = () => {
   const [notRender, setNotRender] = useState(false);
   const { setuser } = useUser();
   const emailInputRef = useRef(null);
+  const [type, setType] = useState("password");
+  const [icon, setIcon] = useState(FaEye);
   const { login, logout } = useAuth();
   const navigate = useNavigate();
 
@@ -64,9 +66,9 @@ const Login = () => {
     //   resetFields();
     //   return;
     // }
-
     loginUser();
   };
+
   const HandleSessions = async (storedToken) => {
     const urlme = 'http://localhost:5000/api/users/me';
     try {
@@ -134,6 +136,16 @@ const Login = () => {
     setEmail("");
     setPassword("");
   };
+
+  const handleToggle = () => {
+    if (type === "password") {
+      setIcon(FaEyeSlash);
+      setType("text");
+    } else {
+      setIcon(FaEye);
+      setType("password");
+    }
+  };
   useLayoutEffect(() => { 
     fetchData();
   }, []);
@@ -142,6 +154,7 @@ const Login = () => {
       <Loading/>
     )
   }
+
   return (
     <>
       <section className="app-section">
@@ -153,26 +166,46 @@ const Login = () => {
               {isLoading && <Loading />}
               <div className="form-row">
                 <label htmlFor="email">Login</label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={email}
-                  placeholder="Email Address"
-                  ref={emailInputRef}
-                  onChange={(e) => setEmail(e.target.value)}
-                ></input>
+                <div className="input-container">
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={email}
+                    placeholder="Email Address"
+                    ref={emailInputRef}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="form-input"
+                  />
+                </div>
               </div>
               <div className="form-row">
                 <label htmlFor="password">Password</label>
-                <input
-                  type="password"
-                  id="password"
-                  name="password"
-                  value={password}
-                  placeholder="Password"
-                  onChange={(e) => setPassword(e.target.value)}
-                ></input>
+                <div className="input-container">
+                  <input
+                    type={type}
+                    id="password"
+                    name="password"
+                    value={password}
+                    placeholder="Password"
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="form-input"
+                  />
+                  <span class="password-toggle" onClick={handleToggle}>
+                    {icon}
+                  </span>
+                </div>
+              </div>
+              <div className="remember-container">
+                <label for="checkbox">
+                  <input
+                    className="remember-me"
+                    type="checkbox"
+                    id="checkbox"
+                    name="remember"
+                  />
+                  <span className="keep">Stay logged in</span>
+                </label>
               </div>
               <span className="form-entry">
                 <button type="submit" onClick={handleClick}>
