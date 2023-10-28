@@ -4,7 +4,7 @@
 
 html {
   overflow-y: hidden;
-  overflow-x: hidden;
+  overflow-x: hidden !important;
 }
 
 .sidebar-container {
@@ -20,6 +20,7 @@ html {
     rgb(225, 234, 238) 90%
   );
   overflow-y: hidden;
+  overflow-x: hidden;
 }
 
 .sidebar {

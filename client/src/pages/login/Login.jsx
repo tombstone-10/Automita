@@ -9,7 +9,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setLoading] = useState(false);
-  const [user, setUser] = useState(data);
+  // const [user, setUser] = useState(data);
   const emailInputRef = useRef(null);
   const [type, setType] = useState("password");
   const [icon, setIcon] = useState(FaEye);

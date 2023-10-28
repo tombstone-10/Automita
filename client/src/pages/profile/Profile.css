@@ -23,7 +23,7 @@
 
 .profile-container {
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
   padding: 2rem 2rem 8rem 2rem;
   height: 50vh;
   background: white;
@@ -175,8 +175,6 @@
 .bg-container {
   display: flex;
   width: 40%;
-  justify-content: center;
-  align-items: flex-end;
 }
 
 .bg-container img {

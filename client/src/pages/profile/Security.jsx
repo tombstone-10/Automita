@@ -51,7 +51,7 @@ const Security = () => {
   return (
     <>
       <UserHeading />
-      <Tabs tabs={profileTabs} />
+      <Tabs tabs={profileTabs} parentName={"profile"} />
       <div className="profile-container">
         <form className="profile-form">
           <div className="password-row">

@@ -18,7 +18,7 @@ const Profile = () => {
   return (
     <>
       <UserHeading />
-      <Tabs tabs={profileTabs} />
+      <Tabs tabs={profileTabs} parentName={"profile"} />
       <DefaultPage currentPage={profilePage} />
     </>
   );

@@ -3,10 +3,16 @@ import { Link, NavLink } from "react-router-dom";
 import "./Tabs.css";
 import { FaLaptop, FaShieldAlt, FaInfoCircle } from "react-icons/fa";
 
-const Tabs = ({ tabs }) => {
+const Tabs = ({ tabs, parentName }) => {
   return (
     <>
-      <div className="tabs">
+      <div
+        className={
+          parentName == "profile" || parentName == "generate"
+            ? "tabs"
+            : "tabs-equal-border"
+        }
+      >
         {tabs.map((item, index) => {
           return (
             <>
