@@ -6,7 +6,7 @@ import { generatePage } from "../../data/PageData";
 const Generate = () => {
   return (
     <>
-      <Tabs tabs={generateTabs} />
+      <Tabs tabs={generateTabs} parentName={"generate"} />
       <DefaultPage currentPage={generatePage} />
     </>
   );
