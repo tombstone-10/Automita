@@ -29,19 +29,23 @@ export const profilePage = [
 
 export const generatePage = [
   {
-    text: "This is to use generation. First add courses, then add teachers and programs.",
+    text: "This is a guide on how to generate timetable.",
     icon: <FaCheck />,
   },
   {
-    text: "Hello world 1",
+    text: "Add programs, then add courses and assign them to respective programs.",
     icon: <FaCheck />,
   },
   {
-    text: "Hello World 2",
+    text: "Add teachers and assign them to their respective courses",
     icon: <FaCheck />,
   },
   {
-    text: "Hello World 3",
+    text: "Simply add available rooms and the time slot for each class and lab respectively.",
+    icon: <FaCheck />,
+  },
+  {
+    text: "Once you are done adding all the load, click generate on Add Programs page to create the timetable.",
     icon: <FaCheck />,
   },
 ];
