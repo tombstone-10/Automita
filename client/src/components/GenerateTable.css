@@ -1,0 +1,40 @@
+.table {
+  overflow-y: auto;
+  max-height: 50vh;
+  margin-top: 3rem;
+  border: 1px solid #36454f;
+}
+
+table {
+  border-collapse: separate;
+  width: 100%;
+}
+
+td,
+th {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  text-align: left;
+  padding: 8px;
+}
+
+.del {
+  text-align: center;
+  color: white;
+  background: #36454f;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.del:hover {
+  text-align: center;
+  color: black;
+  background: rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+
+th {
+  position: sticky;
+  top: 0;
+  background: orange;
+  color: white;
+}

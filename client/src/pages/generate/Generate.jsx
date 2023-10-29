@@ -7,7 +7,7 @@ const Generate = () => {
   return (
     <>
       <Tabs tabs={generateTabs} parentName={"generate"} />
-      <DefaultPage currentPage={generatePage} />
+      <DefaultPage currentPage={generatePage} parentName={"generate"} />
     </>
   );
 };

@@ -33,17 +33,17 @@ export const generateTabs = [
     icon: <FaGraduationCap />,
   },
   {
-    path: "/profile/security",
+    path: "/generate/addCourses",
     name: "Add Courses",
     icon: <FaBook />,
   },
   {
-    path: "/profile/about",
+    path: "/generate/addTeachers",
     name: "Add Teachers",
     icon: <FaChalkboardTeacher />,
   },
   {
-    path: "/profile/about",
+    path: "/generate/addRooms",
     name: "Add Rooms",
     icon: <FaSchool />,
   },
