@@ -1,14 +1,15 @@
 import Add from "../../components/Add";
 import Tabs from "../../components/Tabs";
 import { generateTabs } from "../../data/TabsData";
+import "./Generate.css";
 
-const AddTeacher = () => {
+const AddRoom = () => {
   return (
     <>
       <Tabs tabs={generateTabs} />
-      <Add parentName={"addTeacher"} />
+      <Add parentName={"addRoom"} />
     </>
   );
 };
 
-export default AddTeacher;
+export default AddRoom;
