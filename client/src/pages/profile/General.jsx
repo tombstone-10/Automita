@@ -1,20 +1,30 @@
 import Tabs from "../../components/Tabs";
+import { useContext } from "react";
 import "./Profile.css";
 import bg from "../../assets/images/profile.svg";
 import { profileTabs } from "../../data/TabsData";
 import UserHeading from "../../components/UserHeading";
+import { UserContext } from "../../hooks/LogedUserHook";
+import 'react-toastify/dist/ReactToastify.css';
+
+const useUser = () => {
+  return useContext(UserContext);
+}
 
 const General = () => {
-  const name = "Ali Ahmed";
-  const email = "201265@students.au.edu.pk";
-  const role = "Student";
-  const department = "Creative Technologies";
-  const organization = "Air University";
-
+  // const name = "Umar Rasheed";
+  // const email = "201271@students.au.edu.pk";
+  // const role = "Student";
+  // const department = "Creative Technologies";
+  // const organization = "Air University";
+  const {user} = useUser();
+  if(user == null){
+    return <h1>You are not authorized.</h1>
+  }
   return (
     <>
       <UserHeading />
-      <Tabs tabs={profileTabs} parentName={"profile"} />
+      <Tabs tabs={profileTabs} />
       <div className="profile-container">
         <form className="profile-form">
           <div className="profile-form-row">
@@ -23,7 +33,7 @@ const General = () => {
               type="text"
               id="name"
               name="name"
-              value={name}
+              value={user.name}
               disabled
             ></input>
           </div>
@@ -33,7 +43,7 @@ const General = () => {
               type="email"
               id="email"
               name="email"
-              value={email}
+              value={user.email}
               disabled
             ></input>
           </div>
@@ -43,7 +53,7 @@ const General = () => {
               type="text"
               id="role"
               name="role"
-              value={role}
+              value={user.role}
               disabled
             ></input>
           </div>
@@ -53,7 +63,7 @@ const General = () => {
               type="text"
               id="department"
               name="department"
-              value={department}
+              value={user.department}
               disabled
             ></input>
           </div>
@@ -63,7 +73,7 @@ const General = () => {
               type="text"
               id="organization"
               name="organization"
-              value={organization}
+              value={user.organization}
               disabled
             ></input>
           </div>

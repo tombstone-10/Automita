@@ -1,20 +1,31 @@
-import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
+import { Route, Routes} from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import Generate from "./generate/Generate";
-import View from "../pages/View/View";
+import View from "../pages/view/View";
 import General from "./profile/General";
 import Security from "./profile/Security";
 import About from "./profile/About";
 import Profile from "./profile/Profile";
+import { useContext } from "react";
+import { UserContext } from "../hooks/LogedUserHook";
+import Logout from "../components/Logout";
 import AddTeacher from "./generate/AddTeacher";
 import AddCourse from "./generate/AddCourse";
 import AddClass from "./generate/AddClass";
 import AddRoom from "./generate/AddRoom";
 
+
+const useUser = () => {
+  return useContext(UserContext);
+}
 const Dashboard = () => {
+  const {user} = useUser();
+  if(user == null) {
+    return <h1>You are not Authorized.</h1>
+  }
+
   return (
     <>
-      <Router>
         <Sidebar>
           <Routes>
             <Route index path="/profile" element={<Profile />} />
@@ -27,10 +38,10 @@ const Dashboard = () => {
             <Route path="/generate/addCourses" element={<AddCourse />} />
             <Route path="/generate/addTeachers" element={<AddTeacher />} />
             <Route path="/generate/addRooms" element={<AddRoom />} />
+            <Route path="/logout" element={<Logout/>} />
             <Route path="*" element={<h1>404!</h1>} />
           </Routes>
         </Sidebar>
-      </Router>
     </>
   );
 };

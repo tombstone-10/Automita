@@ -1,7 +1,6 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
 import "./Tabs.css";
-import { FaLaptop, FaShieldAlt, FaInfoCircle } from "react-icons/fa";
 
 const Tabs = ({ tabs, parentName }) => {
   return (

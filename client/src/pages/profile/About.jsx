@@ -6,7 +6,7 @@ const About = () => {
   return (
     <>
       <UserHeading />
-      <Tabs tabs={profileTabs} parentName={"profile"} />
+      <Tabs tabs={profileTabs} />
       <h2>About Page</h2>
     </>
   );
