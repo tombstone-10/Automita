@@ -1,0 +1,120 @@
+.add-container {
+  display: flex;
+  margin-top: 2rem;
+  /* border: 1px solid orange; */
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  width: 15vw;
+  height: 15vh;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.5s;
+  border-radius: 6px;
+  margin-left: 2px;
+}
+
+.add-container:hover {
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px,
+    rgba(255, 179, 16, 0.89) 0px 0px 0px 1px;
+}
+
+.add-btn {
+  display: flex;
+  align-items: center;
+}
+
+.add-btn-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem;
+  background-color: #36454f;
+  border-radius: 20px;
+  color: white;
+}
+
+.add-form-container {
+  display: flex;
+  margin: auto;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: fixed;
+  padding: 2rem;
+  z-index: 999;
+  background: rgba(0, 0, 0, 0.7);
+  transition: all 0.3s ease-in-out;
+}
+
+.main-form {
+  display: flex;
+}
+
+.add-form {
+  background-color: white;
+  padding: 2rem 10rem;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.add-form-row {
+  padding: 0.75rem;
+}
+
+.add-form-row button {
+  background: #ff851b;
+  color: white;
+  border-color: transparent;
+  margin: 0 1rem;
+  font-weight: bold;
+  padding: 0.5rem 1.5rem;
+  text-transform: capitalize;
+  /* letter-spacing: 1px; */
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.add-form-row button:hover {
+  background: rgba(255, 166, 0, 0.705);
+  color: white;
+}
+
+.add-form-row label {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 0.5rem;
+}
+
+.add-form-row input {
+  outline: none;
+  border: transparent;
+  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
+    rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+  padding: 0.25rem;
+  border-radius: 6px;
+  width: 200px;
+}
+
+.add-form-row select {
+  outline: none;
+  border: transparent;
+  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
+    rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+  padding: 0.25rem;
+  border-radius: 6px;
+  width: 200px;
+}
+
+.multi-select-dropdown {
+  min-width: 200px;
+  max-width: 200px;
+}

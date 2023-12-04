@@ -1,4 +1,12 @@
-import { FaLaptop, FaShieldAlt, FaInfoCircle } from "react-icons/fa";
+import {
+  FaLaptop,
+  FaShieldAlt,
+  FaInfoCircle,
+  FaGraduationCap,
+  FaBook,
+  FaChalkboardTeacher,
+  FaSchool,
+} from "react-icons/fa";
 
 export const profileTabs = [
   {
@@ -20,18 +28,23 @@ export const profileTabs = [
 
 export const generateTabs = [
   {
-    path: "/profile/general",
-    name: "Assign",
-    icon: <FaLaptop />,
+    path: "/generate/addClass",
+    name: "Add Classes",
+    icon: <FaGraduationCap />,
   },
   {
-    path: "/profile/security",
-    name: "Add Teacher",
-    icon: <FaShieldAlt />,
+    path: "/generate/addCourses",
+    name: "Add Courses",
+    icon: <FaBook />,
   },
   {
-    path: "/profile/about",
-    name: "Add Course",
-    icon: <FaInfoCircle />,
+    path: "/generate/addTeachers",
+    name: "Add Teachers",
+    icon: <FaChalkboardTeacher />,
+  },
+  {
+    path: "/generate/addRooms",
+    name: "Add Rooms",
+    icon: <FaSchool />,
   },
 ];

@@ -4,7 +4,7 @@ import "../pages/profile/Profile.css";
 import gif from "../assets/gif/profile-gif.json";
 import { FaCheck } from "react-icons/fa";
 
-const DefaultPage = ({ currentPage }) => {
+const DefaultPage = ({ currentPage, parentName }) => {
   const defaultOptions = {
     loop: true,
     autoplay: true,
@@ -18,7 +18,11 @@ const DefaultPage = ({ currentPage }) => {
       <div className="profile-container">
         <div className="profile-sub-container">
           <div className="profile-form">
-            <h2 className="profile-heading">Let's get started!</h2>
+            {parentName == "generate" ? (
+              <h2 className="profile-heading">Let's Generate!</h2>
+            ) : (
+              <h2 className="profile-heading">Let's Get Started!</h2>
+            )}
 
             {currentPage.map((page, index) => {
               return (

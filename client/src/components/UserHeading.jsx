@@ -10,7 +10,7 @@ const UserHeading = () => {
   const { user } = useUser();
   return (
     <div className="user-heading">
-      <h2>Hello {user.name},</h2>
+      <h2>Hello {user.name}!</h2>
     </div>
   );
 };
