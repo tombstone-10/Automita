@@ -1,8 +1,8 @@
 .table {
   overflow-y: auto;
-  max-height: 50vh;
+  max-height: 45vh;
   margin-top: 3rem;
-  /* border: 1px dotted #36454f; */
+  border: 3px solid #36454f;
 }
 
 table {
