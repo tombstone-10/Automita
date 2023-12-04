@@ -28,8 +28,8 @@ export const profileTabs = [
 
 export const generateTabs = [
   {
-    path: "/generate/addPrograms",
-    name: "Add Programs",
+    path: "/generate/addClass",
+    name: "Add Classes",
     icon: <FaGraduationCap />,
   },
   {

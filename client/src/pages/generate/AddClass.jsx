@@ -1,14 +1,18 @@
 import Add from "../../components/Add";
 import Tabs from "../../components/Tabs";
 import { generateTabs } from "../../data/TabsData";
+import "./Generate.css";
 
-const AddProgram = () => {
+const AddClass = () => {
   return (
     <>
       <Tabs tabs={generateTabs} />
-      <Add parentName={"addProgram"} />
+      <Add parentName={"addClass"} />
+      <div className="generateBtnContainer">
+        <button>Generate</button>
+      </div>
     </>
   );
 };
 
-export default AddProgram;
+export default AddClass;
