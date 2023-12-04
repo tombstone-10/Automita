@@ -18,8 +18,14 @@
   border-radius: var(--radius);
   cursor: pointer;
   transition: all 0.3s;
+  display: flex;
+  margin-right: 10px;
 }
 
 .generateBtnContainer button:hover {
   background: rgba(255, 166, 0, 0.705);
+}
+
+.scroll-container {
+  overflow-y: scroll !important;
 }

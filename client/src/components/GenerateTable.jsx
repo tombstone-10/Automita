@@ -59,6 +59,78 @@ const GenerateTable = ({ parentName }) => {
                 <FaTrash />
               </td>
             </tr>
+            <tr>
+              <td>BSSE</td>
+              <td>Fall</td>
+              <td>7</td>
+              <td>B</td>
+              <td className="del">
+                <FaTrash />
+              </td>
+            </tr>
+            <tr>
+              <td>BSSE</td>
+              <td>Fall</td>
+              <td>7</td>
+              <td>B</td>
+              <td className="del">
+                <FaTrash />
+              </td>
+            </tr>
+            <tr>
+              <td>BSSE</td>
+              <td>Fall</td>
+              <td>7</td>
+              <td>B</td>
+              <td className="del">
+                <FaTrash />
+              </td>
+            </tr>
+            <tr>
+              <td>BSSE</td>
+              <td>Fall</td>
+              <td>7</td>
+              <td>B</td>
+              <td className="del">
+                <FaTrash />
+              </td>
+            </tr>
+            <tr>
+              <td>BSSE</td>
+              <td>Fall</td>
+              <td>7</td>
+              <td>B</td>
+              <td className="del">
+                <FaTrash />
+              </td>
+            </tr>
+            <tr>
+              <td>BSSE</td>
+              <td>Fall</td>
+              <td>7</td>
+              <td>B</td>
+              <td className="del">
+                <FaTrash />
+              </td>
+            </tr>
+            <tr>
+              <td>BSSE</td>
+              <td>Fall</td>
+              <td>7</td>
+              <td>B</td>
+              <td className="del">
+                <FaTrash />
+              </td>
+            </tr>
+            <tr>
+              <td>BSSE</td>
+              <td>Fall</td>
+              <td>7</td>
+              <td>B</td>
+              <td className="del">
+                <FaTrash />
+              </td>
+            </tr>
           </table>
         </div>
       )}

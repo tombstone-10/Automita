@@ -6,10 +6,12 @@ import "./Generate.css";
 const AddClass = () => {
   return (
     <>
-      <Tabs tabs={generateTabs} />
-      <Add parentName={"addClass"} />
-      <div className="generateBtnContainer">
-        <button>Generate</button>
+      <div className="scroll-container">
+        <Tabs tabs={generateTabs} />
+        <div className="generateBtnContainer">
+          <button>Generate</button>
+        </div>
+        <Add parentName={"addClass"} />
       </div>
     </>
   );
