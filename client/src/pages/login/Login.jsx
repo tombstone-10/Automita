@@ -66,6 +66,27 @@ const Login = () => {
     //   resetFields();
     //   return;
     // }
+    if (!email.includes('@')) {
+      setTimeout(() => {
+        setLoading(false);
+        setAuth("Email invalid");
+      }, 700);
+      return;
+    }
+    if (email.includes('@') && email.endsWith('@')) {
+      setTimeout(() => {
+        setLoading(false);
+        setAuth("Email invalid");
+      }, 700);
+      return;
+    }
+    if (!email.includes('.com') ) {
+      setTimeout(() => {
+        setLoading(false);
+        setAuth("Email invalid");
+      }, 700);
+      return;
+    }
     loginUser();
   };
 
