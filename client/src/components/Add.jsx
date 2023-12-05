@@ -219,6 +219,55 @@ const Add = ({ parentName }) => {
           </div>
         </div>
       )}
+
+      {/* will only render for add program page */}
+      {modal && parentName == "timeSlot" && (
+        <div className="add-form-container">
+          <div className="main-form">
+            <form className="add-form">
+              <div className="add-form-row">
+                <label htmlFor="availableHours">Available Hours Per Day</label>
+                <input
+                  name="availableHours"
+                  type="number"
+                  min={1}
+                  max={12}
+                  placeholder="Enter from 1 to 12"
+                />
+              </div>
+              <div className="add-form-row">
+                <label htmlFor="startTime">Day Start Time</label>
+                <input
+                  name="startTime"
+                  type="number"
+                  placeholder="Enter Starting Time"
+                />
+              </div>
+              <div className="add-form-row">
+                <label htmlFor="endTime">Day End Time</label>
+                <input
+                  name="endTime"
+                  type="number"
+                  placeholder="Enter Ending Time"
+                />
+              </div>
+              <div className="add-form-row">
+                <label htmlFor="classDuration">Enter Class Duration</label>
+                <input
+                  name="classDuration"
+                  type="number"
+                  placeholder="Minutes for each class"
+                />
+              </div>
+
+              <div className="add-form-row">
+                <button onClick={toggleModal}>Close</button>
+                <button type="submit">Submit</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </>
   );
 };
