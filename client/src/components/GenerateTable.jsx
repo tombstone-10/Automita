@@ -1,7 +1,15 @@
+import { useState } from "react";
 import "./GenerateTable.css";
 import { FaTrash } from "react-icons/fa";
 
 const GenerateTable = ({ parentName }) => {
+  const [isDelete, setDelete] = useState(false);
+
+  // function responsible for opening and closing delete
+  const toggleDelete = () => {
+    setDelete(!isDelete);
+  };
+
   return (
     <>
       {parentName == "addClass" && (
@@ -19,7 +27,7 @@ const GenerateTable = ({ parentName }) => {
               <td>Fall</td>
               <td>1</td>
               <td>A</td>
-              <td className="del">
+              <td className="del" onClick={toggleDelete}>
                 <FaTrash />
               </td>
             </tr>
@@ -267,6 +275,44 @@ const GenerateTable = ({ parentName }) => {
               </td>
             </tr>
           </table>
+        </div>
+      )}
+
+      {parentName == "timeSlot" && (
+        <div className="table">
+          <table>
+            <tr>
+              <th>Available Hours</th>
+              <th>Day Start Time</th>
+              <th>Day End Time</th>
+              <th>Class Duration (Minutes)</th>
+              <th></th>
+            </tr>
+            <tr>
+              <td>10</td>
+              <td>0800</td>
+              <td>1800</td>
+              <td>50</td>
+              <td className="del">
+                <FaTrash />
+              </td>
+            </tr>
+          </table>
+        </div>
+      )}
+
+      {/* code responsible for delete modal */}
+      {isDelete && (
+        <div className="delete-container">
+          <div className="delete-form">
+            <div className="delete-form-row">
+              <h3>Are you sure you want to delete?</h3>
+            </div>
+            <div className="add-form-row">
+              <button onClick={toggleDelete}>No</button>
+              <button type="submit">Yes</button>
+            </div>
+          </div>
         </div>
       )}
     </>
