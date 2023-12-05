@@ -34,4 +34,4 @@ const classSchema = mongoose.Schema({
 );
 
 
-module.exports = mongoose.model('Class', userSchema);
+module.exports = mongoose.model('Class', classSchema);

@@ -1,4 +1,4 @@
-import { useEffect,useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import logo from "../../assets/png/logo-no-background.png";
 import Loading from "../../components/Loading";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
@@ -8,14 +8,16 @@ import { useContext } from "react";
 import { AuthContext } from "../../hooks/isLogedInHook";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../hooks/LogedUserHook";
-
+import { TimetableContext } from "../../hooks/timetableDataHook"; 
+const useTimeTables = () => {
+  return useContext(TimetableContext);
+}
 const useAuth = () => {
   return useContext(AuthContext);
 }
 const useUser = () => {
   return useContext(UserContext);
 }
-
 const Login = () => {
   let storedToken = null;
   const [auth, setAuth] = useState("Authentication Required");
@@ -23,20 +25,32 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [isLoading, setLoading] = useState(false);
   const [notRender, setNotRender] = useState(false);
-  const { setuser } = useUser();
+  const { user, setuser } = useUser();
   const emailInputRef = useRef(null);
   const [type, setType] = useState("password");
   const [icon, setIcon] = useState(FaEye);
   const { login, logout } = useAuth();
+  const {set_classes_addition, set_course_addition, set_teacher_addition, set_room_addition} = useTimeTables();
   const navigate = useNavigate();
 
   const navigateToProfile = () => {
     navigate('/profile');
   }
+  const getuserTimeTable = async()=>{
+    const urlClass = 'http://localhost:5000/api/timetables/class/get';
+    //const urlCourse = 'http://localhost:5000/api/timetables/course/get';
+    //const urlTeacher = 'http://localhost:5000/api/timetables/teacher/get';
+    try{
+      const res = await axios.get(urlClass, {email:user.email})
+      set_classes_addition(res.data);
+    }
+    catch(err){
+      console.log('Error getting classes')
+      console.log(err);
+    }
+  }
 
-  useEffect(() => {
-    emailInputRef.current.focus();
-  }, []);
+
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -48,24 +62,7 @@ const Login = () => {
       }, 700);
       return;
     }
-    // if (email != user.email || password != user.password) {
-    //   setAuth("Verifying...");
-    //   setTimeout(() => {
-    //     setLoading(false);
-    //     setAuth("Authentication Failed");
-    //   }, 1000);
-    //   resetFields();
-    //   return;
-    // }
-    // if (email == user.email && password == user.password) {
-    //   setAuth("Verifying...");
-    //   setTimeout(() => {
-    //     setLoading(false);
-    //     setAuth("Login Successful");
-    //   }, 1000);
-    //   resetFields();
-    //   return;
-    // }
+    
     if (!email.includes('@')) {
       setTimeout(() => {
         setLoading(false);
@@ -110,7 +107,6 @@ const Login = () => {
       if (session === true) {
         login();
       } else {
-        console.log('false');
         logout();
       }
     }
@@ -130,7 +126,7 @@ const Login = () => {
         }, 1000);
         resetFields();
         fetchData();
-        
+
         // console.log(sessionStorage.getItem('userToken'));
         navigateToProfile();
       }
@@ -161,12 +157,18 @@ const Login = () => {
       setType("password");
     }
   };
-  useLayoutEffect(() => { 
+  useLayoutEffect(() => {
     fetchData();
   }, []);
-  if(notRender === true) {
+
+
+  useEffect(() => {
+    emailInputRef.current.focus();
+    getuserTimeTable();
+  }, []);
+  if (notRender === true) {
     return (
-      <Loading/>
+      <Loading />
     )
   }
 

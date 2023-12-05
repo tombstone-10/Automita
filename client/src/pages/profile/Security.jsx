@@ -59,6 +59,7 @@ const Security = () => {
   const handlePasswordSubmit = async (e) => {
     e.preventDefault();
     const url = 'http://localhost:5000/api/users/change/password';
+    if(newPassword == confirmPassword){
     try {
       const response = await axios.patch(url, { email: user.email, oldPassword: currentPassword, newPassword: newPassword });
       if (response) {
@@ -75,6 +76,7 @@ const Security = () => {
       setNewPassword("");
       setConfirmPassword("");
     }
+  }
 
   };
 

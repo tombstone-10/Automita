@@ -31,4 +31,4 @@ const roomSchema = mongoose.Schema({
 );
 
 
-module.exports = mongoose.model('Room', userSchema);
+module.exports = mongoose.model('Room', roomSchema);

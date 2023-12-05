@@ -19,7 +19,7 @@ app.use(express.json());  //built in express middleware to parse incoming JSON i
 app.use(express.urlencoded({ extended: false }));  //built in express middleware to parse URL-encoded data in req body
 app.use(cors(corsOptions));
 app.use('/api/users', require('./routes/userRoutes')); //for all /api/users requests, it will go userRoutes instead
-
+app.use('/api/timetables', require('./routes/timetableRoutes')); //for all timetable requests, it will go to this file instead
 
 app.use(errorHandler);
 

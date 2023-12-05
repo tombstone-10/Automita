@@ -3,6 +3,8 @@ const router = express.Router();
 const {registerUser,loginUser,getMe, changePassword} = require('../controller/userController');
 const { protect } = require('../middleware/authMiddleware');
 
+// **---------------**
+// **login/ signup routes**
 
 router.route('/').post(registerUser);
 router.route('/login').post(loginUser);
