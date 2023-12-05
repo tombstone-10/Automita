@@ -80,13 +80,7 @@ const Login = () => {
       }, 700);
       return;
     }
-    if (!email.includes('.com') ) {
-      setTimeout(() => {
-        setLoading(false);
-        setAuth("Email invalid");
-      }, 700);
-      return;
-    }
+
     loginUser();
   };
 
