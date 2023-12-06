@@ -8,10 +8,7 @@ import { useContext } from "react";
 import { AuthContext } from "../../hooks/isLogedInHook";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../hooks/LogedUserHook";
-import { TimetableContext } from "../../hooks/timetableDataHook"; 
-const useTimeTables = () => {
-  return useContext(TimetableContext);
-}
+
 const useAuth = () => {
   return useContext(AuthContext);
 }
@@ -25,30 +22,17 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [isLoading, setLoading] = useState(false);
   const [notRender, setNotRender] = useState(false);
-  const { user, setuser } = useUser();
+  const { setuser } = useUser();
   const emailInputRef = useRef(null);
   const [type, setType] = useState("password");
   const [icon, setIcon] = useState(FaEye);
   const { login, logout } = useAuth();
-  const {set_classes_addition, set_course_addition, set_teacher_addition, set_room_addition} = useTimeTables();
   const navigate = useNavigate();
 
   const navigateToProfile = () => {
     navigate('/profile');
   }
-  const getuserTimeTable = async()=>{
-    const urlClass = 'http://localhost:5000/api/timetables/class/get';
-    //const urlCourse = 'http://localhost:5000/api/timetables/course/get';
-    //const urlTeacher = 'http://localhost:5000/api/timetables/teacher/get';
-    try{
-      const res = await axios.get(urlClass, {email:user.email})
-      set_classes_addition(res.data);
-    }
-    catch(err){
-      console.log('Error getting classes')
-      console.log(err);
-    }
-  }
+
 
 
 
@@ -164,7 +148,6 @@ const Login = () => {
 
   useEffect(() => {
     emailInputRef.current.focus();
-    getuserTimeTable();
   }, []);
   if (notRender === true) {
     return (

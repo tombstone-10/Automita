@@ -3,11 +3,18 @@ import Select from "react-select";
 import "./Add.css";
 import { FaPlus } from "react-icons/fa";
 import GenerateTable from "./GenerateTable";
+import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Add = ({ parentName }) => {
   // initially popup is not open
   const [modal, setModal] = useState(false);
   const [isSearchable, setIsSearchable] = useState(false);
+  const [programName, setProgramName] = useState('');
+  const [session, setSession] = useState('Fall');
+  const [semester, setSemester] = useState('1');
+  const [section, setSection] = useState('');
 
   // function responsible for opening and closing modal
   const toggleModal = () => {
@@ -38,6 +45,50 @@ const Add = ({ parentName }) => {
     },
     { value: "Big Data Analytics", label: "Big Data Analytics" },
   ];
+  const handleProgramNameChange = (event) => {
+    setProgramName(event.target.value);
+  };
+  const handleSessionChange = (event) => {
+    setSession(event.target.value);
+  };
+  const handleSemesterChange = (event) => {
+    setSemester(event.target.value);
+  };
+  const handleSectionChange = (event) => {
+    setSection(event.target.value);
+  };
+  const handleClassAddition = async(e) => {
+    e.preventDefault();
+    toggleModal();
+    const url = 'http://localhost:5000/api/timetables/class/add';
+    const token = sessionStorage.getItem('userToken');
+    if (token) {
+      let id = JSON.parse(token);
+      try {
+        const res = await axios.post(url, {'id': id, 'program_name': programName, 'session':session.toUpperCase(), 'semester': semester, 'section':section.toUpperCase()});
+        if(res.data){
+          toast.success("Class Added Successfully");
+          setProgramName('');
+          setSection('');
+          setSemester('1');
+          setSession('Fall');
+        }
+        else {
+          toast.error("Class Added Error");
+        }
+      }
+      catch (err) {
+        toast.error("Class Added Error");
+        console.log(err);
+       
+      }
+    }
+    else {
+      return null;
+    } 
+    
+
+  }
 
   return (
     <>
@@ -55,19 +106,14 @@ const Add = ({ parentName }) => {
       {modal && parentName == "addClass" && (
         <div className="add-form-container">
           <div className="main-form">
-            <form className="add-form">
+            <form className="add-form" onSubmit={handleClassAddition}>
               <div className="add-form-row">
                 <label htmlFor="programName">Program Name</label>
-                <select name="programName" required>
-                  <option value="BSSE">BSSE</option>
-                  <option value="BSAI">BSAI</option>
-                  <option value="BSCGD">BSCGD</option>
-                  <option value="BSDS">BSDS</option>
-                </select>
+                <input type="text" name="programName" value={programName} onChange={handleProgramNameChange} required  placeholder="BSCS"/> 
               </div>
               <div className="add-form-row">
                 <label htmlFor="sessionName">Choose Session</label>
-                <select name="sessionName" required>
+                <select name="sessionName" value={session} onChange={handleSessionChange} required>
                   <option value="fall">Fall</option>
                   <option value="spring">Spring</option>
                   <option value="summer">Summer</option>
@@ -75,7 +121,7 @@ const Add = ({ parentName }) => {
               </div>
               <div className="add-form-row">
                 <label htmlFor="semesterName">Choose Semester</label>
-                <select name="sessionName" required>
+                <select name="sessionName" value={semester} onChange={handleSemesterChange} required>
                   <option value="1">1</option>
                   <option value="2">2</option>
                   <option value="3">3</option>
@@ -87,17 +133,15 @@ const Add = ({ parentName }) => {
                 </select>
               </div>
               <div className="add-form-row">
-                <label htmlFor="semesterName">Choose Section</label>
-                <select name="sessionName">
-                  <option value="A">A</option>
-                  <option value="B">B</option>
-                </select>
+                <label >Section</label>
+                <input type="text" value={section} onChange={handleSectionChange} placeholder="A"/>
               </div>
               <div className="add-form-row">
                 <button onClick={toggleModal}>Close</button>
-                <button type="submit">Submit</button>
+                <button type="submit" >Submit</button>
               </div>
             </form>
+            
           </div>
         </div>
       )}
@@ -150,6 +194,7 @@ const Add = ({ parentName }) => {
                 <button type="submit">Submit</button>
               </div>
             </form>
+            
           </div>
         </div>
       )}
@@ -193,6 +238,7 @@ const Add = ({ parentName }) => {
                 <button type="submit">Submit</button>
               </div>
             </form>
+            
           </div>
         </div>
       )}
@@ -216,9 +262,12 @@ const Add = ({ parentName }) => {
                 <button type="submit">Submit</button>
               </div>
             </form>
+            
           </div>
         </div>
+        
       )}
+      <ToastContainer />
     </>
   );
 };

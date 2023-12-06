@@ -16,7 +16,8 @@ const addClass = asyncHandler(async (req, res) => {
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
     }
-    const {email, program_name, session, semester, section } = req.body;
+    const {email } = req.user;
+    const { program_name, session, semester, section } = req.body;
 
     // Checking if there are inputs in all fields
     if (!program_name || !session || !semester || !section) {
@@ -69,7 +70,8 @@ const addCourse = asyncHandler(async (req, res) => {
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
     }
-    const {email, code, name, credit_hours, class_assigned } = req.body;
+    const {email } = req.user;
+    const { code, name, credit_hours, class_assigned } = req.body;
 
     // Checking if there are inputs in all fields
     if (!code || !name || !class_assigned || credit_hours == null) {
@@ -120,7 +122,8 @@ const addTeacher = asyncHandler(async (req, res) => {
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
     }
-    const { email,id,name, course_assigned, class_assigned} = req.body;
+    const {email } = req.user;
+    const { id,name, course_assigned, class_assigned} = req.body;
 
     // Checking if there are inputs in all fields
     if (!id || !name || course_assigned == null || class_assigned==null) {
@@ -150,19 +153,19 @@ try{
 });
 
 const getCourses = asyncHandler(async (req, res) => {
-        const {email}  = req.body;
+        const {email}  = req.user;
         const coursess = await Course.find({ email: email }).select('-email');  //email will be excluded from the results
         res.status(200).json(coursess);
         
 });
 const getClasses = asyncHandler(async (req, res) => {
-    const {email}  = req.body;
+    const {email}  = req.user;
     const classess = await Class.find({ email: email},{email:false});  //email will be excluded from the results
     res.status(200).json(classess);
     
 });
 const getTeachers = asyncHandler(async (req, res) => {
-    const {email}  = req.body;
+    const {email}  = req.user;
     const teacherss = await Teacher.find({ email: email},{email:false});  //email will be excluded from the results
     res.status(200).json(teacherss);
     
