@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { sidebarNav } from "../data/SidebarData";
 import {
   FaUserAlt,
   FaPlus,
@@ -10,7 +11,6 @@ import {
 import logo from "../assets/png/logo-icon.png";
 import { NavLink } from "react-router-dom";
 import "./Sidebar.css";
-import Loading from "./Loading";
 
 const Sidebar = ({ children }) => {
   const [isOpen, setIsOpen] = useState(true);
@@ -19,32 +19,7 @@ const Sidebar = ({ children }) => {
   setTimeout(() => {
     setIsLoading(false);
   }, 1000);
-  const sidebarNav = [
-    {
-      id: 1,
-      path: "/profile",
-      name: "Profile",
-      icon: <FaUserAlt />,
-    },
-    {
-      id: 2,
-      path: "/generate",
-      name: "Generate",
-      icon: <FaPlus />,
-    },
-    {
-      id: 3,
-      path: "/view",
-      name: "View",
-      icon: <FaCalendar />,
-    },
-    {
-      id: 4,
-      path: "/logout",
-      name: "Logout",
-      icon: <FaPowerOff />,
-    },
-  ];
+
   return (
     <div className="sidebar-container">
       <div className={isOpen ? "sidebar" : "sidebar-close"}>

@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import ViewList from "./ViewList";
+import ViewList from "./VerticalTabs";
 import Timetable from "./Timetable";
 
 const ViewListRoutes = () => {

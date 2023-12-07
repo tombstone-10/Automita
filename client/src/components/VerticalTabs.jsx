@@ -1,6 +1,6 @@
 import { classesList } from "../data/ViewListData";
 import Timetable from "./Timetable";
-import "./ViewList.css";
+import "./VerticalTabs.css";
 import { Link, NavLink } from "react-router-dom";
 import ViewListRoutes from "./ViewListRoutes";
 
