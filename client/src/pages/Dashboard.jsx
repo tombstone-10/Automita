@@ -14,6 +14,8 @@ import AddCourse from "./generate/AddCourse";
 import AddClass from "./generate/AddClass";
 import AddRoom from "./generate/AddRoom";
 import TimeSlot from "./generate/TimeSlot";
+import ViewClass from "./view/ViewClass";
+import Timetable from "../components/Timetable";
 
 const useUser = () => {
   return useContext(UserContext);
@@ -39,6 +41,10 @@ const Dashboard = () => {
           <Route path="/generate/addTeachers" element={<AddTeacher />} />
           <Route path="/generate/addRooms" element={<AddRoom />} />
           <Route path="/generate/timeSlots" element={<TimeSlot />} />
+          <Route path="/view/class" element={<ViewClass />} />
+          <Route path="/view/teacher" element={<TimeSlot />} />
+          <Route path="/view/room" element={<TimeSlot />} />
+          <Route path="/view/class/:id" element={<Timetable />} />
           <Route path="/logout" element={<Logout />} />
           <Route path="*" element={<h1>404!</h1>} />
         </Routes>
