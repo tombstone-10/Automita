@@ -1,0 +1,21 @@
+.view-container {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+}
+
+.list-left-panel {
+  display: grid;
+  margin-top: 1rem;
+  background: #36454f;
+  width: 200px;
+  height: 80vh;
+  border-radius: 6px;
+}
+
+.list-text {
+  color: white;
+}
+
+.timetable {
+  display: grid;
+}

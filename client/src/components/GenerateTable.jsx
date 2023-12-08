@@ -1,6 +1,6 @@
 import "./GenerateTable.css";
 import { FaTrash } from "react-icons/fa";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { TimetableContext } from "../hooks/timetableDataHook";
 import axios from "axios";
 const useTimeTables = () => {
@@ -30,8 +30,13 @@ const getuserTimeTable = async (url, token) => {
 
 
 const GenerateTable = ({ parentName }) => {
+  const [isDelete, setDelete] = useState(false);
   const { classes_addition, set_classes_addition, course_addition, set_course_addition, teacher_addition, set_teacher_addition, room_addition, set_room_addition } = useTimeTables();
   const storedToken = sessionStorage.getItem('userToken');
+   // function responsible for opening and closing delete
+   const toggleDelete = () => {
+    setDelete(!isDelete);
+  };
   const fetchdata = async (parentName) => {
     if (parentName === "addClass") {
       const url = 'http://localhost:5000/api/timetables/class/get';
@@ -167,6 +172,42 @@ const GenerateTable = ({ parentName }) => {
               </tr>
             ))}
           </table>
+        </div>
+      )}
+      {parentName == "timeSlot" && (
+        <div className="table">
+          <table>
+            <tr>
+              <th>Available Hours</th>
+              <th>Day Start Time</th>
+              <th>Day End Time</th>
+              <th>Class Duration (Minutes)</th>
+              <th></th>
+            </tr>
+            <tr>
+              <td>10</td>
+              <td>0800</td>
+              <td>1800</td>
+              <td>50</td>
+              <td className="del">
+                <FaTrash />
+              </td>
+            </tr>
+          </table>
+        </div>
+      )}
+      {/* code responsible for delete modal */}
+      {isDelete && (
+        <div className="delete-container">
+          <div className="delete-form">
+            <div className="delete-form-row">
+              <h3>Are you sure you want to delete?</h3>
+            </div>
+            <div className="add-form-row">
+              <button onClick={toggleDelete}>No</button>
+              <button type="submit">Yes</button>
+            </div>
+          </div>
         </div>
       )}
     </>

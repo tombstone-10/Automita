@@ -6,6 +6,7 @@ import {
   FaBook,
   FaChalkboardTeacher,
   FaSchool,
+  FaClock,
 } from "react-icons/fa";
 
 export const profileTabs = [
@@ -45,6 +46,29 @@ export const generateTabs = [
   {
     path: "/generate/addRooms",
     name: "Add Rooms",
+    icon: <FaSchool />,
+  },
+  {
+    path: "/generate/timeSlots",
+    name: "Time Slots",
+    icon: <FaClock />,
+  },
+];
+
+export const viewTabs = [
+  {
+    path: "/view/class",
+    name: "View Classes Timetable",
+    icon: <FaGraduationCap />,
+  },
+  {
+    path: "/view/teacher",
+    name: "View Teachers Timetable",
+    icon: <FaChalkboardTeacher />,
+  },
+  {
+    path: "/view/room",
+    name: "View Rooms Timetable",
     icon: <FaSchool />,
   },
 ];
