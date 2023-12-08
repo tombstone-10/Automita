@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { useContext } from "react";
 import Select from "react-select";
 import "./Add.css";
 import { FaPlus } from "react-icons/fa";
@@ -6,7 +7,24 @@ import GenerateTable from "./GenerateTable";
 import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import { TimetableContext } from "../hooks/timetableDataHook";
+const useTimeTables = () => {
+  return useContext(TimetableContext);
+}
+const getClassForCourse = async (id) => {
+  const url = 'http://localhost:5000/api/timetables/course/get_single';
+  try {
+    const res = await axios.post(url, { id: id });
+    if (res.data)
+      return res.data;
+    else
+      return null;
+  }
+  catch (err) {
+    console.error(err);
+    return null;
+  }
+};
 const Add = ({ parentName }) => {
   // initially popup is not open
   const [modal, setModal] = useState(false);
@@ -15,36 +33,55 @@ const Add = ({ parentName }) => {
   const [session, setSession] = useState('Fall');
   const [semester, setSemester] = useState('1');
   const [section, setSection] = useState('');
-
+  const { classes_addition, course_addition } = useTimeTables();
+  const [courseCode, setCourseCode] = useState('');
+  const [courseName, setCourseName] = useState('');
+  const [creditHours, setCreditHours] = useState('');
+  const [selectedClasses, setSelectedClasses] = useState([]);
+  const [TeacherName, setTeacherName] = useState('');
+  const [selectedClassesTeachers, setSelectedClassesTeachers] = useState([]);
+  const [selectedCoursesTeachers, setSelectedCoursesTeachers] = useState(null);
+  const [prevselectedCoursesTeachers, setprevSelectedCoursesTeachers] = useState(null); // to check if the course changes in ADD TEACHERS
   // function responsible for opening and closing modal
   const toggleModal = () => {
     setModal(!modal);
   };
+  const [assignClassesForTeachers, setassignClassesForTeachers] = useState([]);
+  if (selectedCoursesTeachers !== prevselectedCoursesTeachers) {
+    let somefunction = async () => {
+      try {
+        const response = await getClassForCourse(selectedCoursesTeachers.id);
+        setassignClassesForTeachers(response.map((singleClass) => ({
+          id: singleClass._id,
+          value: `${singleClass.program_name}-${singleClass.session}-${singleClass.semester}-${singleClass.section}`,
+          label: `${singleClass.program_name}-${singleClass.session}-${singleClass.semester}-${singleClass.section}`
+        })));
+      }
+      catch (err) {
+        console.error(err);
+      }
+    }
+
+    somefunction();
+
+    setprevSelectedCoursesTeachers(selectedCoursesTeachers);
+  }
+  // options for multi select dropdown
+  const assignClasses = classes_addition.map((clas) => ({
+    id: clas._id,
+    value: `${clas.program_name}-${clas.session}-${clas.semester}-${clas.section}`,
+    label: `${clas.program_name}-${clas.session}-${clas.semester}-${clas.section}`
+  }));
 
   // options for multi select dropdown
-  const assignClasses = [
-    { value: "BSSE-F-1-A", label: "BSSE-F-1-A" },
-    { value: "BSSE-F-1-B", label: "BSSE-F-1-B" },
-    { value: "BSSE-F-3-A", label: "BSSE-F-3-A" },
-    { value: "BSSE-F-3-B", label: "BSSE-F-3-B" },
-  ];
+  const assignCourses = course_addition.map((course) => (
+    {
+      id: course._id,
+      value: `${course.code}`,
+      label: `${course.code}`
+    }
+  ))
 
-  // options for multi select dropdown
-  const assignCourses = [
-    {
-      value: "Data Structures & Algorithms",
-      label: "Data Structures & Algorithms",
-    },
-    {
-      value: "Mobile Application Development",
-      label: "Mobile Application Development",
-    },
-    {
-      value: "Formal Methods in Software Engineering",
-      label: "Formal Methods in Software Engineering",
-    },
-    { value: "Big Data Analytics", label: "Big Data Analytics" },
-  ];
   const handleProgramNameChange = (event) => {
     setProgramName(event.target.value);
   };
@@ -57,7 +94,7 @@ const Add = ({ parentName }) => {
   const handleSectionChange = (event) => {
     setSection(event.target.value);
   };
-  const handleClassAddition = async(e) => {
+  const handleClassAddition = async (e) => {
     e.preventDefault();
     toggleModal();
     const url = 'http://localhost:5000/api/timetables/class/add';
@@ -65,13 +102,16 @@ const Add = ({ parentName }) => {
     if (token) {
       let id = JSON.parse(token);
       try {
-        const res = await axios.post(url, {'id': id, 'program_name': programName, 'session':session.toUpperCase(), 'semester': semester, 'section':section.toUpperCase()});
-        if(res.data){
+        const res = await axios.post(url, { 'id': id, 'program_name': programName, 'session': session.toUpperCase(), 'semester': semester, 'section': section.toUpperCase() });
+        if (res.data) {
           toast.success("Class Added Successfully");
           setProgramName('');
           setSection('');
           setSemester('1');
           setSession('Fall');
+          setTimeout(() => {
+            window.location.reload();
+          }, 500);
         }
         else {
           toast.error("Class Added Error");
@@ -80,14 +120,104 @@ const Add = ({ parentName }) => {
       catch (err) {
         toast.error("Class Added Error");
         console.log(err);
-       
+
       }
     }
     else {
       return null;
-    } 
-    
+    }
 
+
+  }
+  const handleCourseCodeChange = (event) => {
+    setCourseCode(event.target.value);
+  };
+  const handleCourseNameChange = (event) => {
+    setCourseName(event.target.value);
+  };
+  const handleCreditHoursChnage = (event) => {
+    setCreditHours(event.target.value);
+  };
+  const handleClassesSelectChange = (selectedOptions) => {
+    setSelectedClasses(selectedOptions);
+  };
+  const handleClassesSelectChangeForTeachers = (selectedOptions) => {
+    setSelectedClassesTeachers(selectedOptions);
+  };
+  const handleCourseAddition = async (e) => {
+    e.preventDefault();
+    toggleModal();
+    const url = 'http://localhost:5000/api/timetables/course/add';
+    const token = sessionStorage.getItem('userToken');
+    if (token) {
+      let id = JSON.parse(token);
+      try {
+        const classIDs = selectedClasses.map((selectedClass) => selectedClass.id);
+        const res = await axios.post(url, { id: id, code: courseCode, name: courseName, credit_hours: creditHours, class_assigned: classIDs });
+        if (res.data) {
+          toast.success("Course Added Successfully");
+          setCourseCode('');
+          setCourseName('');
+          setCreditHours('');
+          setSelectedClasses([]);
+          setTimeout(() => {
+            window.location.reload();
+          }, 500);
+        }
+        else {
+          toast.error("Course Added Error");
+        }
+      }
+      catch (err) {
+        toast.error("Course Added Error");
+        console.log(err);
+
+      }
+    }
+    else {
+      return null;
+    }
+
+
+  };
+  const handleCoursesSelectChangeForTeachers = (selectedOptions) => {
+    setSelectedCoursesTeachers(selectedOptions);
+  };
+  const handleTeacherNameChange = (e) => {
+    setTeacherName(e.target.value);
+  }
+  const hanldeTeacherAddition = async (e) => {
+    e.preventDefault();
+    toggleModal();
+    const url = 'http://localhost:5000/api/timetables/teacher/add';
+    const token = sessionStorage.getItem('userToken');
+    if (token) {
+      let id = JSON.parse(token);
+      try {
+        const classIDs = selectedClassesTeachers.map((selectedClass) => selectedClass.id);
+        const res = await axios.post(url, { id: id, name: TeacherName, course_assigned: selectedCoursesTeachers.id, class_assigned: classIDs });
+        if (res.data) {
+          toast.success("Teacher Added Successfully");
+          setTeacherName('');
+          setSelectedCoursesTeachers([]);
+          setSelectedClassesTeachers([]);
+          setTimeout(() => {
+            window.location.reload();
+          }, 500);
+        }
+        else {
+          toast.error("Course Added Error");
+        }
+      }
+      catch (err) {
+        toast.error("Course Added Error");
+        console.log(err);
+
+      }
+    }
+    else {
+      return null;
+    }
   }
 
   return (
@@ -109,7 +239,7 @@ const Add = ({ parentName }) => {
             <form className="add-form" onSubmit={handleClassAddition}>
               <div className="add-form-row">
                 <label htmlFor="programName">Program Name</label>
-                <input type="text" name="programName" value={programName} onChange={handleProgramNameChange} required  placeholder="BSCS"/> 
+                <input type="text" name="programName" value={programName} onChange={handleProgramNameChange} required placeholder="BSCS" />
               </div>
               <div className="add-form-row">
                 <label htmlFor="sessionName">Choose Session</label>
@@ -134,14 +264,14 @@ const Add = ({ parentName }) => {
               </div>
               <div className="add-form-row">
                 <label >Section</label>
-                <input type="text" value={section} onChange={handleSectionChange} placeholder="A"/>
+                <input type="text" value={section} onChange={handleSectionChange} placeholder="A" />
               </div>
               <div className="add-form-row">
                 <button onClick={toggleModal}>Close</button>
                 <button type="submit" >Submit</button>
               </div>
             </form>
-            
+
           </div>
         </div>
       )}
@@ -150,13 +280,15 @@ const Add = ({ parentName }) => {
       {modal && parentName == "addCourse" && (
         <div className="add-form-container">
           <div className="main-form">
-            <form className="add-form">
+            <form className="add-form" onSubmit={handleCourseAddition}>
               <div className="add-form-row">
                 <label htmlFor="courseCode">Course Code</label>
                 <input
                   type="text"
                   placeholder="Enter course code"
                   name="courseCode"
+                  value={courseCode}
+                  onChange={handleCourseCodeChange}
                   id="courseCode"
                 />
               </div>
@@ -166,15 +298,19 @@ const Add = ({ parentName }) => {
                   type="text"
                   placeholder="Enter course name"
                   name="courseName"
+                  value={courseName}
+                  onChange={handleCourseNameChange}
                   id="courseName"
                 />
               </div>
               <div className="add-form-row">
                 <label htmlFor="creditHours">Credit Hours</label>
                 <input
-                  type="text"
+                  type="number"
                   placeholder="Enter credit hours"
                   name="creditHours"
+                  value={creditHours}
+                  onChange={handleCreditHoursChnage}
                   id="creditHours"
                 />
               </div>
@@ -185,8 +321,8 @@ const Add = ({ parentName }) => {
                   options={assignClasses}
                   isMulti
                   isSearchable={isSearchable}
-                  // className="basic-multi-select"
-                  // classNamePrefix="select"
+                  value={selectedClasses}
+                  onChange={handleClassesSelectChange}
                 />
               </div>
               <div className="add-form-row">
@@ -194,7 +330,7 @@ const Add = ({ parentName }) => {
                 <button type="submit">Submit</button>
               </div>
             </form>
-            
+
           </div>
         </div>
       )}
@@ -203,34 +339,38 @@ const Add = ({ parentName }) => {
       {modal && parentName == "addTeacher" && (
         <div className="add-form-container">
           <div className="main-form">
-            <form className="add-form">
+            <form className="add-form" onSubmit={hanldeTeacherAddition}>
               <div className="add-form-row">
                 <label htmlFor="teacherName">Teacher Name</label>
                 <input
                   type="text"
                   placeholder="Enter teacher name"
+                  value={TeacherName}
                   name="teacherName"
                   id="teacherName"
+                  onChange={handleTeacherNameChange}
+                />
+              </div>
+
+              <div className="add-form-row">
+                <label htmlFor="assignToCourse">Assign to Course(s)</label>
+                <Select
+                  className="multi-select-dropdown"
+                  options={assignCourses}
+                  isSearchable={isSearchable}
+                  value={selectedCoursesTeachers}
+                  onChange={handleCoursesSelectChangeForTeachers}
                 />
               </div>
               <div className="add-form-row">
                 <label htmlFor="assignToClass">Assign to Class(es)</label>
                 <Select
                   className="multi-select-dropdown"
-                  options={assignClasses}
+                  options={assignClassesForTeachers}
                   isMulti
                   isSearchable={isSearchable}
-                />
-              </div>
-              <div className="add-form-row">
-                <label htmlFor="assignToCourse">Assign to Course(s)</label>
-                <Select
-                  className="multi-select-dropdown"
-                  options={assignCourses}
-                  isMulti
-                  isSearchable={isSearchable}
-                  // className="basic-multi-select"
-                  // classNamePrefix="select"
+                  value={selectedClassesTeachers}
+                  onChange={handleClassesSelectChangeForTeachers}
                 />
               </div>
               <div className="add-form-row">
@@ -238,7 +378,7 @@ const Add = ({ parentName }) => {
                 <button type="submit">Submit</button>
               </div>
             </form>
-            
+
           </div>
         </div>
       )}
@@ -262,10 +402,10 @@ const Add = ({ parentName }) => {
                 <button type="submit">Submit</button>
               </div>
             </form>
-            
+
           </div>
         </div>
-        
+
       )}
       <ToastContainer />
     </>

@@ -14,11 +14,11 @@ const teacherSchema = mongoose.Schema({
         type: String,
         required: [true, 'Please add a Course Name'],
     },
-    course_assigned: [{
+    course_assigned: {
         type: mongoose.Schema.Types.ObjectId, // Reference to courseModel
         ref: 'Course', // Specify the referenced model
         required: [true, 'Please add a reference to a course'],
-    }], 
+    }, 
     class_assigned: [{
         type: mongoose.Schema.Types.ObjectId, // Reference to classModel
         ref: 'Class', // Specify the referenced model

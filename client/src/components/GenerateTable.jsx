@@ -1,6 +1,6 @@
 import "./GenerateTable.css";
 import { FaTrash } from "react-icons/fa";
-import { useContext, useEffect, useLayoutEffect } from "react";
+import { useContext, useEffect } from "react";
 import { TimetableContext } from "../hooks/timetableDataHook";
 import axios from "axios";
 const useTimeTables = () => {
@@ -10,8 +10,8 @@ const getuserTimeTable = async (url, token) => {
   if (token) {
     let id = JSON.parse(token);
     try {
-      const res = await axios.post(url, {id});
-      if(res.data){
+      const res = await axios.post(url, { id });
+      if (res.data) {
         return res.data;
       }
       else {
@@ -19,14 +19,13 @@ const getuserTimeTable = async (url, token) => {
       }
     }
     catch (err) {
-      console.log('Error getting classes')
       console.log(err);
       return null;
     }
   }
   else {
     return null;
-  } 
+  }
 }
 
 
@@ -37,25 +36,25 @@ const GenerateTable = ({ parentName }) => {
     if (parentName === "addClass") {
       const url = 'http://localhost:5000/api/timetables/class/get';
       const data = await getuserTimeTable(url, storedToken);
-       set_classes_addition(data);
+      await set_classes_addition(data);
     }
     else if (parentName === "addCourse") {
       const url = 'http://localhost:5000/api/timetables/course/get';
       const data = await getuserTimeTable(url, storedToken);
-      set_course_addition(data);
+      await set_course_addition(data);
     }
     else if (parentName === "addTeacher") {
       const url = 'http://localhost:5000/api/timetables/teacher/get';
       const data = await getuserTimeTable(url, storedToken);
-      set_teacher_addition(data);
+      await set_teacher_addition(data);
     }
     else if (parentName === "addRoom") {
       console.log("adding room");
     }
   }
-  useEffect(()=>{
+  useEffect(() => {
     fetchdata(parentName);
-  },[]);
+  }, []);
 
   return (
     <>
@@ -97,10 +96,16 @@ const GenerateTable = ({ parentName }) => {
             </tr>
             {course_addition.map((courses, index) => (
               <tr key={index}>
-                <td>{courses.course_code}</td>
-                <td>{courses.course_name}</td>
-                <td>{courses.credit_hour}</td>
-                <td>{courses.assigned_to}</td>
+                <td>{courses.code}</td>
+                <td>{courses.name}</td>
+                <td>{courses.credit_hours}</td>
+                <td>{courses.class_assigned.map((singleClass, index) => (
+                  <div key={index}>
+                    {`${singleClass.program_name}-${singleClass.session}-${singleClass.semester}-${singleClass.section}`}
+                  </div>
+                ))}
+
+                </td>
                 <td className="del">
                   <FaTrash />
                 </td>
@@ -121,9 +126,19 @@ const GenerateTable = ({ parentName }) => {
             </tr>
             {teacher_addition.map((teachers, index) => (
               <tr key={index}>
-                <td>{teachers.teacher_name}</td>
-                <td>{teachers.assigned_classes}</td>
-                <td>{teachers.assigned_courses}</td>
+                <td>{teachers.name}</td>
+                <td>{teachers.class_assigned.map((singleClass, index) => (
+                  <div key={index}>
+                    {`${singleClass.program_name}-${singleClass.session}-${singleClass.semester}-${singleClass.section}`}
+                  </div>
+                ))}
+
+                </td>
+                <td>
+                  <div>
+                  {`${teachers.course_assigned.code} ${teachers.course_assigned.name}`}
+                  </div>
+                </td>
                 <td className="del">
                   <FaTrash />
                 </td>

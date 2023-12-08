@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {addClass, addTeacher, addCourse, getCourses, getTeachers, getClasses} = require('../controller/timetableController');
+const {addClass, addTeacher, addCourse, getCourses, getTeachers, getClasses, getClassesFromCourse} = require('../controller/timetableController');
 const { protect } = require('../middleware/authMiddleware');
 // **---------------**
 // **Timetable payload addition and deletion**
@@ -8,6 +8,7 @@ const { protect } = require('../middleware/authMiddleware');
 router.route('/course/add').post(protect, addCourse);
 router.route('/course/delete').delete();
 router.route('/course/get').post(protect, getCourses);
+router.route('/course/get_single').post(getClassesFromCourse);
 router.route('/class/add').post(protect, addClass);
 router.route('/class/delete').delete();
 router.route('/class/get').post(protect, getClasses);
