@@ -11,14 +11,6 @@ const TimetableProvider = ({ children }) => {
 
     ])
     const [room_addition, set_room_addition] = useState([
-        { room_no: '401' },
-        { room_no: '402' },
-        { room_no: '403' },
-        { room_no: '404' },
-        { room_no: '405' },
-        { room_no: '406' },
-        { room_no: '407' },
-        { room_no: '401 - Lab' }
     ])
 
 

@@ -49,7 +49,10 @@ const GenerateTable = ({ parentName }) => {
       await set_teacher_addition(data);
     }
     else if (parentName === "addRoom") {
-      console.log("adding room");
+      const url = 'http://localhost:5000/api/timetables/room/get';
+      const data = await getuserTimeTable(url, storedToken);
+      if(data){
+      await set_room_addition(data);}
     }
   }
   useEffect(() => {
@@ -157,7 +160,7 @@ const GenerateTable = ({ parentName }) => {
             </tr>
             {room_addition.map((rooms, index) => (
               <tr key={index}>
-                <td>{rooms.room_no}</td>
+                <td>{rooms.rooms}</td>
                 <td className="del">
                   <FaTrash />
                 </td>

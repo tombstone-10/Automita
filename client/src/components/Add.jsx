@@ -39,9 +39,10 @@ const Add = ({ parentName }) => {
   const [creditHours, setCreditHours] = useState('');
   const [selectedClasses, setSelectedClasses] = useState([]);
   const [TeacherName, setTeacherName] = useState('');
-  const [selectedClassesTeachers, setSelectedClassesTeachers] = useState([]);
+  const [selectedClassesTeachers, setSelectedClassesTeachers] = useState(null);
   const [selectedCoursesTeachers, setSelectedCoursesTeachers] = useState(null);
   const [prevselectedCoursesTeachers, setprevSelectedCoursesTeachers] = useState(null); // to check if the course changes in ADD TEACHERS
+  const [rooms,setRooms] = useState(null);
   // function responsible for opening and closing modal
   const toggleModal = () => {
     setModal(!modal);
@@ -189,34 +190,77 @@ const Add = ({ parentName }) => {
   const hanldeTeacherAddition = async (e) => {
     e.preventDefault();
     toggleModal();
-    const url = 'http://localhost:5000/api/timetables/teacher/add';
-    const token = sessionStorage.getItem('userToken');
-    if (token) {
-      let id = JSON.parse(token);
-      try {
-        const classIDs = selectedClassesTeachers.map((selectedClass) => selectedClass.id);
-        const res = await axios.post(url, { id: id, name: TeacherName, course_assigned: selectedCoursesTeachers.id, class_assigned: classIDs });
-        if (res.data) {
-          toast.success("Teacher Added Successfully");
-          setTeacherName('');
-          setSelectedCoursesTeachers([]);
-          setSelectedClassesTeachers([]);
-          setTimeout(() => {
-            window.location.reload();
-          }, 500);
+    if (TeacherName != null && TeacherName != ''&& selectedClassesTeachers != null && selectedClassesTeachers != [] && selectedCoursesTeachers !== null) {
+      const url = 'http://localhost:5000/api/timetables/teacher/add';
+      const token = sessionStorage.getItem('userToken');
+      if (token) {
+        let id = JSON.parse(token);
+        try {
+          const classIDs = selectedClassesTeachers.map((selectedClass) => selectedClass.id);
+          const res = await axios.post(url, { id: id, name: TeacherName, course_assigned: selectedCoursesTeachers.id, class_assigned: classIDs });
+          if (res.data) {
+            toast.success("Teacher Added Successfully");
+            setTeacherName('');
+            setSelectedCoursesTeachers([]);
+            setSelectedClassesTeachers([]);
+            setTimeout(() => {
+              window.location.reload();
+            }, 500);
+          }
+          else {
+            toast.error("Course Added Error");
+          }
         }
-        else {
+        catch (err) {
           toast.error("Course Added Error");
+          console.log(err);
+
         }
       }
-      catch (err) {
-        toast.error("Course Added Error");
-        console.log(err);
-
+      else {
+        return null;
       }
     }
     else {
-      return null;
+      toast.error("ADD ALL FIELDS!!");
+    }
+  }
+  const handleRoomsChange = (e) => {
+    setRooms(e.target.value);
+  }
+  const handleRoomsAddition = async(e) => {
+    e.preventDefault();
+    toggleModal();
+    if (rooms != null ) {
+      const url = 'http://localhost:5000/api/timetables/room/add';
+      const token = sessionStorage.getItem('userToken');
+      if (token) {
+        let id = JSON.parse(token);
+        try {
+          const res = await axios.post(url, { id: id, rooms: rooms });
+          if (res.data) {
+            toast.success("Room Added Successfully");
+            setRooms(null);
+            setTimeout(() => {
+              window.location.reload();
+            }, 500);
+          }
+          else {
+            toast.error("Room Added Error");
+          }
+        }
+        catch (err) {
+          toast.error("Room Added Error");
+          console.log(err);
+
+        }
+      }
+      else {
+        return null;
+      }
+    }
+    else {
+      toast.error("ADD ALL FIELDS!!");
     }
   }
 
@@ -387,7 +431,7 @@ const Add = ({ parentName }) => {
       {modal && parentName == "addRoom" && (
         <div className="add-form-container">
           <div className="main-form">
-            <form className="add-form">
+            <form className="add-form" onSubmit={handleRoomsAddition}>
               <div className="add-form-row">
                 <label htmlFor="roomName">Room Name</label>
                 <input
@@ -395,6 +439,8 @@ const Add = ({ parentName }) => {
                   placeholder="Enter room name"
                   name="roomName"
                   id="roomName"
+                  value={rooms}
+                  onChange={handleRoomsChange}
                 />
               </div>
               <div className="add-form-row">

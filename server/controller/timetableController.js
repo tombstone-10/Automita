@@ -1,7 +1,7 @@
 const asyncHandler = require('express-async-handler');  //it will handle all the errors asychronously
 const Class = require('../models/classModel');
 const Course = require('../models/courseModel');
-const Room = require('../models/roomModel');
+const Rooms = require('../models/roomsModel');
 const Teacher = require('../models/teacherModel');
 const { validationResult } = require('express-validator');
 
@@ -125,7 +125,7 @@ const addTeacher = asyncHandler(async (req, res) => {
     const { email } = req.user;
     const { name, course_assigned, class_assigned } = req.body;
     // Checking if there are inputs in all fields
-    if (!name || course_assigned == null || class_assigned == null) {
+    if (!name || !course_assigned || !class_assigned) {
         res.status(400);
         throw new Error('Please add all Fields');
     }
@@ -196,8 +196,56 @@ const getTeachers = asyncHandler(async (req, res) => {
 
     res.status(200).json(teacherss);
 });
+const addrooms = asyncHandler(async (req, res) => {
+    const errors = validationResult(req);    //validate and sanitize user inputs to prevent malicious input
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+    const { email } = req.user;
+    const { rooms } = req.body;
+    // Checking if there are inputs in all fields
+    if (!rooms) {
+        res.status(400);
+        throw new Error('Please add all Fields');
+    }
+
+    try {
+        //creating a new Teacher    
+        const newRooms = await Rooms.create({
+            email: email,
+            rooms: rooms
+        });
+
+        //checking whether the Teacher is created successfully. if yes, then appending the data to database
+        if (newRooms) {
+            return res.status(201).json(newRooms);
+        } else {
+            return res.status(400).json({ error: 'Invalid Room Data' });
+        }
+    }
+    catch (err) {
+        return res.status(500).json({ error: 'Internal Server Error' });
+    }
+})
+
+const getRooms = asyncHandler(async (req, res) => {
+    const { email } = req.user;
+    if (email) {
+        try {
+            let room = await Rooms.find({ email: email }, { email: false });  // Email will be excluded from the results
+            if(room) {
+            res.status(200).json(room);}
+            else {
+                throw new Error(`Could not find`);
+            }
+        }
+        catch(err){
+            throw new Error("Server error " );
+        }
+    }
 
 
+});
 module.exports = {
-    addClass, addCourse, addTeacher, getCourses, getClasses, getTeachers, getClassesFromCourse
+    addClass, addCourse, addTeacher, getCourses, getClasses, getTeachers, getClassesFromCourse, addrooms,getRooms
 }
