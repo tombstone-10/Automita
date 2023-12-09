@@ -52,11 +52,13 @@ const Add = ({ parentName }) => {
     let somefunction = async () => {
       try {
         const response = await getClassForCourse(selectedCoursesTeachers.id);
+        if(response){
         setassignClassesForTeachers(response.map((singleClass) => ({
           id: singleClass._id,
           value: `${singleClass.program_name}-${singleClass.session}-${singleClass.semester}-${singleClass.section}`,
           label: `${singleClass.program_name}-${singleClass.session}-${singleClass.semester}-${singleClass.section}`
         })));
+      }
       }
       catch (err) {
         console.error(err);

@@ -169,7 +169,11 @@ const getClassesFromCourse = asyncHandler(async (req, res) => {
             if (SingleCourse) {
                 SingleCourse = await Course.populate(SingleCourse, { path: 'class_assigned', select: '_id program_name session semester section ' });
             }
-            res.status(200).json(SingleCourse.class_assigned);
+            if(SingleCourse.class_assigned){
+            res.status(200).json(SingleCourse.class_assigned);}
+            else {
+                res.status(404).json( 'Class not found');
+            }
         }
         catch (err) {
             console.log(err);
@@ -233,19 +237,99 @@ const getRooms = asyncHandler(async (req, res) => {
     if (email) {
         try {
             let room = await Rooms.find({ email: email }, { email: false });  // Email will be excluded from the results
-            if(room) {
-            res.status(200).json(room);}
+            if (room) {
+                res.status(200).json(room);
+            }
             else {
                 throw new Error(`Could not find`);
             }
         }
-        catch(err){
-            throw new Error("Server error " );
+        catch (err) {
+            throw new Error("Server error ");
         }
     }
 
 
 });
+
+const deleteClass = asyncHandler(async (req, res) => {
+    try {
+        const { id } = req.body;
+        if(!id) {
+            console.log('No id provided');
+            throw new Error('Invalid ID');
+        }
+        else {
+        }
+        const result = await Class.findByIdAndRemove(id);
+
+        if (result) {
+            return res.status(204).json({ message: 'Item deleted successfully' });
+        } else {
+            return res.status(404).json({ message: 'Item not found' });
+        }
+    } catch (err) {
+        console.error('Error deleting item:', err.message);
+        return res.status(500).json({ message: 'Internal Server Error' });
+    }
+});
+const deleteCourse = asyncHandler(async (req, res) => { 
+    try {
+        const { id } = req.body;
+        if(!id) {
+            console.log('No id provided');
+            throw new Error('Invalid ID');
+        }
+        const result = await Course.findByIdAndRemove(id);
+
+        if (result) {
+            return res.status(204).json({ message: 'Item deleted successfully' });
+        } else {
+            return res.status(404).json({ message: 'Item not found' });
+        }
+    } catch (err) {
+        console.error('Error deleting item:', err.message);
+        return res.status(500).json({ message: 'Internal Server Error' });
+    }
+});
+const deleteTeacher = asyncHandler(async (req, res) => {
+    try {
+        const { id } = req.body;
+        if(!id) {
+            console.log('No id provided');
+            throw new Error('Invalid ID');
+        }
+        const result = await Teacher.findByIdAndRemove(id);
+
+        if (result) {
+            return res.status(204).json({ message: 'Item deleted successfully' });
+        } else {
+            return res.status(404).json({ message: 'Item not found' });
+        }
+    } catch (err) {
+        console.error('Error deleting item:', err.message);
+        return res.status(500).json({ message: 'Internal Server Error' });
+    }
+ });
+const deleteRoom = asyncHandler(async (req, res) => { 
+    try {
+        const { id } = req.body;
+        if(!id) {
+            console.log('No id provided');
+        }
+        const result = await Rooms.findByIdAndRemove(id);
+
+        if (result) {
+            return res.status(204).json({ message: 'Item deleted successfully' });
+        } else {
+            return res.status(404).json({ message: 'Item not found' });
+        }
+    } catch (err) {
+        console.error('Error deleting item:', err.message);
+        return res.status(500).json({ message: 'Internal Server Error' });
+    }
+});
 module.exports = {
-    addClass, addCourse, addTeacher, getCourses, getClasses, getTeachers, getClassesFromCourse, addrooms,getRooms
+    addClass, addCourse, addTeacher, getCourses, getClasses, getTeachers, getClassesFromCourse, addrooms, getRooms,
+    deleteClass, deleteCourse, deleteTeacher, deleteRoom
 }
