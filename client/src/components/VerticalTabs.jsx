@@ -13,7 +13,7 @@ const viewList = () => {
             return (
               <>
                 <div className="list-row">
-                  <NavLink to={list.name} className="list-text">
+                  <NavLink to={list.name} key={index} className="list-text">
                     {list.name}
                   </NavLink>
                 </div>
