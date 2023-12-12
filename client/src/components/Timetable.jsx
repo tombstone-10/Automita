@@ -1,5 +1,12 @@
+import ViewClass from "../pages/view/ViewClass";
+
 const Timetable = () => {
-  return <h2>I am timetable from component</h2>;
+  return (
+    <>
+      <ViewClass />
+      <div className="timetable-container">I am timetable from component</div>
+    </>
+  );
 };
 
 export default Timetable;

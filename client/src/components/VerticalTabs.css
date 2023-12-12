@@ -1,21 +1,20 @@
-.view-container {
-  display: grid;
-  grid-template-columns: 1fr 4fr;
-}
-
 .list-left-panel {
-  display: grid;
   margin-top: 1rem;
   background: #36454f;
   width: 200px;
-  height: 80vh;
+  height: 100%;
   border-radius: 6px;
+  padding: 1rem 1rem;
+}
+
+.list-row {
+  padding: 1rem;
+}
+
+.list-row:hover {
+  background-color: #36454f;
 }
 
 .list-text {
   color: white;
-}
-
-.timetable {
-  display: grid;
 }

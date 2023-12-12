@@ -2,7 +2,6 @@ import { classesList } from "../data/ViewListData";
 import Timetable from "./Timetable";
 import "./VerticalTabs.css";
 import { Link, NavLink } from "react-router-dom";
-import ViewListRoutes from "./ViewListRoutes";
 
 const viewList = () => {
   return (
@@ -13,17 +12,15 @@ const viewList = () => {
             return (
               <>
                 <div className="list-row">
-                  <NavLink to={list.name} key={index} className="list-text">
-                    {list.name}
+                  <NavLink to={list.path} key={index} className="list-text">
+                    <div className="list">{list.name}</div>
                   </NavLink>
                 </div>
               </>
             );
           })}
         </div>
-        <div className="timetable">
-          <Timetable />
-        </div>
+        <div className="timetable"></div>
       </div>
     </>
   );

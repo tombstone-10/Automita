@@ -44,7 +44,10 @@ const Dashboard = () => {
           <Route path="/view/class" element={<ViewClass />} />
           <Route path="/view/teacher" element={<TimeSlot />} />
           <Route path="/view/room" element={<TimeSlot />} />
-          <Route path="/view/class/:id" element={<Timetable />} />
+          <Route path="/view/class/bsse-i-a" element={<Timetable />} />
+          <Route path="/view/class/bsse-i-b" element={<Timetable />} />
+          <Route path="/view/class/bsse-iii-a" element={<Timetable />} />
+          <Route path="/view/class/bsse-iii-b" element={<Timetable />} />
           <Route path="/logout" element={<Logout />} />
           <Route path="*" element={<h1>404!</h1>} />
         </Routes>
