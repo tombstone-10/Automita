@@ -3,11 +3,11 @@ import { useContext } from "react";
 import Select from "react-select";
 import "./Add.css";
 import { FaPlus } from "react-icons/fa";
-import GenerateTable from "./GenerateTable";
+import GenerateTable from "../Generate/GenerateTable";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { TimetableContext } from "../hooks/timetableDataHook";
+import { TimetableContext } from "../../hooks/timetableDataHook";
 const useTimeTables = () => {
   return useContext(TimetableContext);
 };

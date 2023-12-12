@@ -1,5 +1,5 @@
-import DefaultPage from "../../components/DefaultPage";
-import Tabs from "../../components/Tabs";
+import DefaultPage from "../../components/DefaultPage/DefaultPage";
+import Tabs from "../../components/Tabs/Tabs";
 import { generateTabs } from "../../data/TabsData";
 import { generatePage } from "../../data/PageData";
 

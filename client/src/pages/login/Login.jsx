@@ -3,18 +3,18 @@ import logo from "../../assets/png/logo-no-background.png";
 import Loading from "../../components/Loading";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import "./Login.css";
-import axios from 'axios';
+import axios from "axios";
 import { useContext } from "react";
-import { AuthContext } from "../../hooks/isLogedInHook";
+import { AuthContext } from "../../hooks/isLoggedInHook";
 import { useNavigate } from "react-router-dom";
-import { UserContext } from "../../hooks/LogedUserHook";
+import { UserContext } from "../../hooks/LoggedUserHook";
 
 const useAuth = () => {
   return useContext(AuthContext);
-}
+};
 const useUser = () => {
   return useContext(UserContext);
-}
+};
 const Login = () => {
   let storedToken = null;
   const [auth, setAuth] = useState("Authentication Required");
@@ -30,11 +30,8 @@ const Login = () => {
   const navigate = useNavigate();
 
   const navigateToProfile = () => {
-    navigate('/profile');
-  }
-
-
-
+    navigate("/profile");
+  };
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -46,15 +43,15 @@ const Login = () => {
       }, 700);
       return;
     }
-    
-    if (!email.includes('@')) {
+
+    if (!email.includes("@")) {
       setTimeout(() => {
         setLoading(false);
         setAuth("Email invalid");
       }, 700);
       return;
     }
-    if (email.includes('@') && email.endsWith('@')) {
+    if (email.includes("@") && email.endsWith("@")) {
       setTimeout(() => {
         setLoading(false);
         setAuth("Email invalid");
@@ -66,24 +63,22 @@ const Login = () => {
   };
 
   const HandleSessions = async (storedToken) => {
-    const urlme = 'http://localhost:5000/api/users/me';
+    const urlme = "http://localhost:5000/api/users/me";
     try {
       let id = null;
       if (storedToken) {
-        id = JSON.parse(storedToken)
+        id = JSON.parse(storedToken);
       }
       const res = await axios.post(urlme, { id: id });
       setuser(res.data);
       return true;
-
-    }
-    catch (err) {
+    } catch (err) {
       setuser(null);
       return false;
     }
-  }
+  };
   const fetchData = async () => {
-    storedToken = sessionStorage.getItem('userToken');
+    storedToken = sessionStorage.getItem("userToken");
     if (storedToken) {
       setNotRender(true);
       const session = await HandleSessions(storedToken);
@@ -94,14 +89,17 @@ const Login = () => {
         logout();
       }
     }
-  }
+  };
   const loginUser = async () => {
-    const urlLogin = 'http://localhost:5000/api/users/login';
+    const urlLogin = "http://localhost:5000/api/users/login";
     try {
-      const response = await axios.post(urlLogin, { email: email, password: password });
+      const response = await axios.post(urlLogin, {
+        email: email,
+        password: password,
+      });
       const data = response.data;
       if (data) {
-        sessionStorage.setItem('userToken', JSON.stringify(data.token));    //Storing data in sessions
+        sessionStorage.setItem("userToken", JSON.stringify(data.token)); //Storing data in sessions
         setAuth("Verifying...");
         setTimeout(() => {
           setLoading(false);
@@ -114,9 +112,7 @@ const Login = () => {
         // console.log(sessionStorage.getItem('userToken'));
         navigateToProfile();
       }
-
-    }
-    catch (err) {
+    } catch (err) {
       // console.log(err.response.data);
       setAuth("Verifying...");
       setTimeout(() => {
@@ -125,7 +121,7 @@ const Login = () => {
       }, 1000);
       resetFields();
     }
-  }
+  };
 
   const resetFields = () => {
     setEmail("");
@@ -145,14 +141,11 @@ const Login = () => {
     fetchData();
   }, []);
 
-
   useEffect(() => {
     emailInputRef.current.focus();
   }, []);
   if (notRender === true) {
-    return (
-      <Loading />
-    )
+    return <Loading />;
   }
 
   return (

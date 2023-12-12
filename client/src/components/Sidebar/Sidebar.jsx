@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { sidebarNav } from "../data/SidebarData";
+import { sidebarNav } from "../../data/SidebarData";
 import {
   FaUserAlt,
   FaPlus,
@@ -8,7 +8,7 @@ import {
   FaPowerOff,
   FaChevronLeft,
 } from "react-icons/fa";
-import logo from "../assets/png/logo-icon.png";
+import logo from "../../assets/png/logo-icon.png";
 import { NavLink } from "react-router-dom";
 import "./Sidebar.css";
 

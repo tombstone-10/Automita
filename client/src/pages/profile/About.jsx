@@ -1,4 +1,4 @@
-import Tabs from "../../components/Tabs";
+import Tabs from "../../components/Tabs/Tabs";
 import UserHeading from "../../components/UserHeading";
 import { profileTabs } from "../../data/TabsData";
 

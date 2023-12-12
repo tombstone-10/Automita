@@ -1,26 +1,26 @@
-import { useEffect } from 'react';
+import { useEffect } from "react";
 import { useContext } from "react";
-import { UserContext } from "../hooks/LogedUserHook";
-import {AuthContext} from '../hooks/isLogedInHook';
-import { useNavigate } from 'react-router-dom';
+import { UserContext } from "../hooks/LoggedUserHook";
+import { AuthContext } from "../hooks/isLoggedInHook";
+import { useNavigate } from "react-router-dom";
 
 const useUser = () => {
-    return useContext(UserContext);
-  }
-  const useAuth = () => {
-    return useContext(AuthContext);
-  }
+  return useContext(UserContext);
+};
+const useAuth = () => {
+  return useContext(AuthContext);
+};
 
 function Logout() {
   const navigate = useNavigate();
-  const {logout} = useAuth();
-  const {setuser} = useUser();
+  const { logout } = useAuth();
+  const { setuser } = useUser();
   useEffect(() => {
-        sessionStorage.removeItem('userToken');
-        setuser(null);
-        logout();
-        
-    navigate('/');
+    sessionStorage.removeItem("userToken");
+    setuser(null);
+    logout();
+
+    navigate("/");
   }, [navigate]);
 
   return null;

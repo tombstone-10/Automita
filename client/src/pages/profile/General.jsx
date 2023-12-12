@@ -1,15 +1,15 @@
-import Tabs from "../../components/Tabs";
+import Tabs from "../../components/Tabs/Tabs";
 import { useContext } from "react";
 import "./Profile.css";
 import bg from "../../assets/images/profile.svg";
 import { profileTabs } from "../../data/TabsData";
 import UserHeading from "../../components/UserHeading";
-import { UserContext } from "../../hooks/LogedUserHook";
-import 'react-toastify/dist/ReactToastify.css';
+import { UserContext } from "../../hooks/LoggedUserHook";
+import "react-toastify/dist/ReactToastify.css";
 
 const useUser = () => {
   return useContext(UserContext);
-}
+};
 
 const General = () => {
   // const name = "Umar Rasheed";
@@ -17,9 +17,9 @@ const General = () => {
   // const role = "Student";
   // const department = "Creative Technologies";
   // const organization = "Air University";
-  const {user} = useUser();
-  if(user == null){
-    return <h1>You are not authorized.</h1>
+  const { user } = useUser();
+  if (user == null) {
+    return <h1>You are not authorized.</h1>;
   }
   return (
     <>

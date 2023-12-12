@@ -1,0 +1,38 @@
+.view-parent-container {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+}
+
+.view-list {
+  display: grid;
+}
+
+.default-timetable {
+  margin-top: 1rem;
+  border-radius: 6px;
+}
+
+.view-side {
+  background: white;
+  height: 70vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 6px;
+}
+
+.view-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.view-icon {
+  display: flex;
+  padding: 0.35rem;
+  background: rgba(255, 166, 0, 0.39);
+  margin-right: 1rem;
+  border-radius: 20px;
+  border: 1px solid orange;
+  color: orange;
+}

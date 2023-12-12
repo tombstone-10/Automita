@@ -1,4 +1,4 @@
-import Tabs from "../../components/Tabs";
+import Tabs from "../../components/Tabs/Tabs";
 import "./Profile.css";
 import bg from "../../assets/images/profile.svg";
 import { useEffect, useState } from "react";
@@ -9,13 +9,13 @@ import { profileTabs } from "../../data/TabsData";
 import UserHeading from "../../components/UserHeading";
 import { useContext } from "react";
 import axios from "axios";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { UserContext } from "../../hooks/LogedUserHook";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { UserContext } from "../../hooks/LoggedUserHook";
 
 const useUser = () => {
   return useContext(UserContext);
-}
+};
 
 const Security = () => {
   const [currentPassword, setCurrentPassword] = useState("");
@@ -58,29 +58,30 @@ const Security = () => {
   };
   const handlePasswordSubmit = async (e) => {
     e.preventDefault();
-    const url = 'http://localhost:5000/api/users/change/password';
+    const url = "http://localhost:5000/api/users/change/password";
     if (newPassword == confirmPassword) {
       try {
-        const response = await axios.patch(url, { email: user.email, oldPassword: currentPassword, newPassword: newPassword });
+        const response = await axios.patch(url, {
+          email: user.email,
+          oldPassword: currentPassword,
+          newPassword: newPassword,
+        });
         if (response) {
           toast.success("Password Changed Successfully");
           setCurrentPassword("");
           setNewPassword("");
           setConfirmPassword("");
         }
-      }
-      catch (err) {
+      } catch (err) {
         console.log(err.response.data);
         toast.error("Request Failed");
         setCurrentPassword("");
         setNewPassword("");
         setConfirmPassword("");
       }
-    }
-    else {
+    } else {
       toast.error("Request Failed");
     }
-
   };
 
   return (
@@ -143,7 +144,11 @@ const Security = () => {
               <button className="cancel-btn">Cancel</button>
             </Link>
             <div>
-              <button type="submit" onClick={handlePasswordSubmit} className="save-btn">
+              <button
+                type="submit"
+                onClick={handlePasswordSubmit}
+                className="save-btn"
+              >
                 Save <FaFile />
               </button>
               <ToastContainer />

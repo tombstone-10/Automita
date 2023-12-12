@@ -32,3 +32,49 @@ export const classesList = [
     name: "BSSE-VII-B",
   },
 ];
+
+export const teachersList = [
+  {
+    path: "/view/teacher/dr-iqbal-murtaza",
+    name: "Dr. Iqbal Murtaza",
+  },
+  {
+    path: "/view/teacher/mr-adnan-aslam",
+    name: "Mr. Adnan Aslam",
+  },
+];
+
+export const roomsList = [
+  {
+    path: "/view/room/401",
+    name: "Room 401",
+  },
+  {
+    path: "/view/room/402",
+    name: "Room 402",
+  },
+  {
+    path: "/view/room/403",
+    name: "Room 403",
+  },
+  {
+    path: "/view/room/404",
+    name: "Room 404",
+  },
+  {
+    path: "/view/room/405",
+    name: "Room 405",
+  },
+  {
+    path: "/view/room/406",
+    name: "Room 406",
+  },
+  {
+    path: "/view/room/407",
+    name: "Room 407",
+  },
+  {
+    path: "/view/room/lab-401",
+    name: "Lab 401",
+  },
+];

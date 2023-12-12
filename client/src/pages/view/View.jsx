@@ -1,5 +1,5 @@
-import Tabs from "../../components/Tabs";
-import DefaultPage from "../../components/DefaultPage";
+import Tabs from "../../components/Tabs/Tabs";
+import DefaultPage from "../../components/DefaultPage/DefaultPage";
 import { viewPage } from "../../data/PageData";
 import { viewTabs } from "../../data/TabsData";
 import "./View.css";

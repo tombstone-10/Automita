@@ -1,7 +1,7 @@
 import "./DefaultPage.css";
 import Lottie from "react-lottie";
-import "../pages/profile/Profile.css";
-import gif from "../assets/gif/profile-gif.json";
+import "../../pages/profile/Profile.css";
+import gif from "../../assets/gif/profile-gif.json";
 import { FaCheck } from "react-icons/fa";
 
 const DefaultPage = ({ currentPage, parentName }) => {

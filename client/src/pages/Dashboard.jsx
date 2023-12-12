@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import Sidebar from "../components/Sidebar";
+import Sidebar from "../components/Sidebar/Sidebar";
 import Generate from "./generate/Generate";
 import View from "../pages/view/View";
 import General from "./profile/General";
@@ -7,7 +7,7 @@ import Security from "./profile/Security";
 import About from "./profile/About";
 import Profile from "./profile/Profile";
 import { useContext } from "react";
-import { UserContext } from "../hooks/LogedUserHook";
+import { UserContext } from "../hooks/LoggedUserHook";
 import Logout from "../components/Logout";
 import AddTeacher from "./generate/AddTeacher";
 import AddCourse from "./generate/AddCourse";
@@ -15,7 +15,9 @@ import AddClass from "./generate/AddClass";
 import AddRoom from "./generate/AddRoom";
 import TimeSlot from "./generate/TimeSlot";
 import ViewClass from "./view/ViewClass";
-import Timetable from "../components/Timetable";
+import Timetable from "../components/Timetable/TimetableClass";
+import ViewTeacher from "./view/ViewTeacher";
+import ViewRoom from "./view/ViewRoom";
 
 const useUser = () => {
   return useContext(UserContext);
@@ -42,8 +44,8 @@ const Dashboard = () => {
           <Route path="/generate/addRooms" element={<AddRoom />} />
           <Route path="/generate/timeSlots" element={<TimeSlot />} />
           <Route path="/view/class" element={<ViewClass />} />
-          <Route path="/view/teacher" element={<TimeSlot />} />
-          <Route path="/view/room" element={<TimeSlot />} />
+          <Route path="/view/teacher" element={<ViewTeacher />} />
+          <Route path="/view/room" element={<ViewRoom />} />
           <Route path="/view/class/bsse-i-a" element={<Timetable />} />
           <Route path="/view/class/bsse-i-b" element={<Timetable />} />
           <Route path="/view/class/bsse-iii-a" element={<Timetable />} />

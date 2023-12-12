@@ -1,10 +1,9 @@
-import "./Tabs.css";
 import { useContext } from "react";
-import { UserContext } from "../hooks/LogedUserHook";
+import { UserContext } from "../hooks/LoggedUserHook";
 
 const useUser = () => {
   return useContext(UserContext);
-}
+};
 
 const UserHeading = () => {
   const { user } = useUser();

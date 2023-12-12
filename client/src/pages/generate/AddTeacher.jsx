@@ -1,5 +1,5 @@
-import Add from "../../components/Add";
-import Tabs from "../../components/Tabs";
+import Add from "../../components/Add/Add";
+import Tabs from "../../components/Tabs/Tabs";
 import { generateTabs } from "../../data/TabsData";
 
 const AddTeacher = () => {
