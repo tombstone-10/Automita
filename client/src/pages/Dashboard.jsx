@@ -15,7 +15,6 @@ import AddClass from "./generate/AddClass";
 import AddRoom from "./generate/AddRoom";
 import TimeSlot from "./generate/TimeSlot";
 import ViewClass from "./view/ViewClass";
-import Timetable from "../components/Timetable/TimetableClass";
 import ViewTeacher from "./view/ViewTeacher";
 import ViewRoom from "./view/ViewRoom";
 
@@ -46,10 +45,7 @@ const Dashboard = () => {
           <Route path="/view/class" element={<ViewClass />} />
           <Route path="/view/teacher" element={<ViewTeacher />} />
           <Route path="/view/room" element={<ViewRoom />} />
-          <Route path="/view/class/bsse-i-a" element={<Timetable />} />
-          <Route path="/view/class/bsse-i-b" element={<Timetable />} />
-          <Route path="/view/class/bsse-iii-a" element={<Timetable />} />
-          <Route path="/view/class/bsse-iii-b" element={<Timetable />} />
+          <Route path="/view/class/:id" element={<ViewClass />} />
           <Route path="/logout" element={<Logout />} />
           <Route path="*" element={<h1>404!</h1>} />
         </Routes>

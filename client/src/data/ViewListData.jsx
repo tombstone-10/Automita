@@ -8,27 +8,27 @@ export const classesList = [
     name: "BSSE-I-B",
   },
   {
-    path: "bsse-iii-a",
+    path: "/view/class/bsse-iii-a",
     name: "BSSE-III-A",
   },
   {
-    path: "bsse-iii-b",
+    path: "/view/class/bsse-iii-b",
     name: "BSSE-III-B",
   },
   {
-    path: "bsse-v-a",
+    path: "/view/class/bsse-v-a",
     name: "BSSE-V-A",
   },
   {
-    path: "bsse-v-b",
+    path: "/view/class/bsse-v-b",
     name: "BSSE-V-B",
   },
   {
-    path: "bsse-vii-a",
+    path: "/view/class/bsse-vii-a",
     name: "BSSE-VII-A",
   },
   {
-    path: "bsse-vii-b",
+    path: "/view/class/bsse-vii-b",
     name: "BSSE-VII-B",
   },
 ];
