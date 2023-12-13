@@ -37,7 +37,7 @@ export const generatePage = [
     icon: <FaCheck />,
   },
   {
-    text: "Add teachers and assign them to their respective courses",
+    text: "Add teachers and assign them to their respective courses.",
     icon: <FaCheck />,
   },
   {
@@ -46,6 +46,25 @@ export const generatePage = [
   },
   {
     text: "Once you are done adding all the load, click generate on Add Programs page to create the timetable.",
+    icon: <FaCheck />,
+  },
+];
+
+export const viewPage = [
+  {
+    text: "This is a guide on how to view timetable.",
+    icon: <FaCheck />,
+  },
+  {
+    text: "Click on view by class, teacher or room for respective view.",
+    icon: <FaCheck />,
+  },
+  {
+    text: "Then click on desired item from list.",
+    icon: <FaCheck />,
+  },
+  {
+    text: "Simply view the timetable.",
     icon: <FaCheck />,
   },
 ];

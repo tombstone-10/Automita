@@ -1,0 +1,30 @@
+.list-left-panel {
+  margin-top: 1rem;
+  background: #36454f;
+  width: 200px;
+  height: 100%;
+  border-radius: 6px;
+  padding: 1rem 1rem;
+}
+
+.list-row {
+  padding: 0.25rem 0rem;
+}
+
+.list-text {
+  display: flex;
+  padding: 0.75rem 0.5rem;
+  color: white;
+  border-radius: 6px;
+  margin: 0.25rem 0.5rem;
+  transition: all 0.3s;
+  text-align: center;
+}
+
+.list-text:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.list {
+  text-align: center;
+}

@@ -5,9 +5,9 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import "./Login.css";
 import axios from "axios";
 import { useContext } from "react";
-import { AuthContext } from "../../hooks/isLogedInHook";
+import { AuthContext } from "../../hooks/isLoggedInHook";
 import { useNavigate } from "react-router-dom";
-import { UserContext } from "../../hooks/LogedUserHook";
+import { UserContext } from "../../hooks/LoggedUserHook";
 
 const useAuth = () => {
   return useContext(AuthContext);
@@ -15,7 +15,6 @@ const useAuth = () => {
 const useUser = () => {
   return useContext(UserContext);
 };
-
 const Login = () => {
   let storedToken = null;
   const [auth, setAuth] = useState("Authentication Required");
@@ -34,10 +33,6 @@ const Login = () => {
     navigate("/profile");
   };
 
-  useEffect(() => {
-    emailInputRef.current.focus();
-  }, []);
-
   const handleClick = (e) => {
     e.preventDefault();
     setLoading(true);
@@ -48,24 +43,7 @@ const Login = () => {
       }, 700);
       return;
     }
-    // if (email != user.email || password != user.password) {
-    //   setAuth("Verifying...");
-    //   setTimeout(() => {
-    //     setLoading(false);
-    //     setAuth("Authentication Failed");
-    //   }, 1000);
-    //   resetFields();
-    //   return;
-    // }
-    // if (email == user.email && password == user.password) {
-    //   setAuth("Verifying...");
-    //   setTimeout(() => {
-    //     setLoading(false);
-    //     setAuth("Login Successful");
-    //   }, 1000);
-    //   resetFields();
-    //   return;
-    // }
+
     if (!email.includes("@")) {
       setTimeout(() => {
         setLoading(false);
@@ -80,6 +58,7 @@ const Login = () => {
       }, 700);
       return;
     }
+
     loginUser();
   };
 
@@ -107,7 +86,6 @@ const Login = () => {
       if (session === true) {
         login();
       } else {
-        console.log("false");
         logout();
       }
     }
@@ -161,6 +139,10 @@ const Login = () => {
   };
   useLayoutEffect(() => {
     fetchData();
+  }, []);
+
+  useEffect(() => {
+    emailInputRef.current.focus();
   }, []);
   if (notRender === true) {
     return <Loading />;

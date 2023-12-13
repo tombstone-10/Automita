@@ -54,3 +54,21 @@ export const generateTabs = [
     icon: <FaClock />,
   },
 ];
+
+export const viewTabs = [
+  {
+    path: "/view/class",
+    name: "View Classes Timetable",
+    icon: <FaGraduationCap />,
+  },
+  {
+    path: "/view/teacher",
+    name: "View Teachers Timetable",
+    icon: <FaChalkboardTeacher />,
+  },
+  {
+    path: "/view/room",
+    name: "View Rooms Timetable",
+    icon: <FaSchool />,
+  },
+];

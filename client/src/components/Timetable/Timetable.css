@@ -1,0 +1,14 @@
+.main-timetable-container {
+  display: grid;
+}
+
+.view-container {
+  display: grid;
+}
+
+.timetable-container {
+  display: grid;
+  position: fixed;
+  top: 110px;
+  left: 35%;
+}
