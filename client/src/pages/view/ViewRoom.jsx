@@ -3,9 +3,6 @@ import { viewTabs } from "../../data/TabsData";
 import "./View.css";
 import { useLocation } from "react-router-dom";
 import VerticalTabs from "../../components/Tabs/VerticalTabs";
-import Lottie from "react-lottie";
-import gif from "../../assets/gif/profile-gif.json";
-import { FaCheck } from "react-icons/fa";
 import {bsse1a, bsse1b, bsse3a,bsse3b,bsse5a,bsse5b,bsse7a,bsse7b, } from "../../components/Timetable/TimetableClass";
 const ViewRoom = () => {
   const location = useLocation();
