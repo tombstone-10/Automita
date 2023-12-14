@@ -46,6 +46,8 @@ const Dashboard = () => {
           <Route path="/view/teacher" element={<ViewTeacher />} />
           <Route path="/view/room" element={<ViewRoom />} />
           <Route path="/view/class/:id" element={<ViewClass />} />
+          <Route path="/view/teacher/:id" element={<ViewTeacher />} />
+          <Route path="/view/room/:id" element={<ViewRoom />} />
           <Route path="/logout" element={<Logout />} />
           <Route path="*" element={<h1>404!</h1>} />
         </Routes>
