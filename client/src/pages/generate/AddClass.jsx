@@ -4,6 +4,7 @@ import { generateTabs } from "../../data/TabsData";
 import "./Generate.css";
 
 const AddClass = () => {
+
   return (
     <>
       <div className="scroll-container">
