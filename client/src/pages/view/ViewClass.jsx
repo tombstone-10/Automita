@@ -40,7 +40,7 @@ const ViewClass = () => {
       if (bsse3b) timetableData = bsse3b;
       else timetableData = [];
     } else if (location.pathname == "/view/class/bsse-v-a") {
-      if (bsse5a) timetableData = bsse5b;
+      if (bsse5a) timetableData = bsse5a;
       else timetableData = [];
     } else if (location.pathname == "/view/class/bsse-v-b") {
       if (bsse5b) timetableData = bsse5b;
@@ -76,21 +76,6 @@ const ViewClass = () => {
           <VerticalTabs parentName={"class"} />
         </div>
         <div className="default-timetable">
-          {/* {locationFinder() ? (
-            <>
-              <div className="view-side">
-                <div className="view-text">
-                  <FaCheck className="view-icon" />
-                  <p>Click on respective class to view its timetable.</p>
-                </div>
-                <div>
-                  <Lottie options={defaultOptions} height={300} width={500} />
-                </div>
-              </div>
-            </>
-          ) : (
-            ""
-          )} */}
           <table className="timetable">
             <thead>
               <tr>

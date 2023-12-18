@@ -15,7 +15,16 @@ import {
   bsse7a,
   bsse7b,
 } from "../../components/Timetable/TimetableClass";
-import { driqbalmurtaza } from "../../components/Timetable/TimetableTeacher";
+import {
+  driqbalmurtaza,
+  mradnanaslam,
+  mranasbilal,
+  mranwarhassan,
+  mrfarooq,
+  mskanwalbatool,
+  mssairasattar,
+  mssidrashiekh,
+} from "../../components/Timetable/TimetableTeacher";
 const ViewTeacher = () => {
   const location = useLocation();
   const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
@@ -33,8 +42,37 @@ const ViewTeacher = () => {
   var timetableData = [];
   if (location.pathname !== "/view/teacher") {
     if (location.pathname === "/view/teacher/dr-iqbal-murtaza") {
-      if (driqbalmurtaza) timetableData = driqbalmurtaza;
-      else timetableData = [];
+      if (driqbalmurtaza) {
+        timetableData = driqbalmurtaza;
+      } else timetableData = [];
+    } else if (location.pathname === "/view/teacher/ms-kanwal-batool") {
+      if (mskanwalbatool) {
+        timetableData = mskanwalbatool;
+      } else timetableData = [];
+    } else if (location.pathname === "/view/teacher/ms-sidra-shiekh") {
+      if (mssidrashiekh) {
+        timetableData = mssidrashiekh;
+      } else timetableData = [];
+    } else if (location.pathname === "/view/teacher/ms-saira-sattar") {
+      if (mssairasattar) {
+        timetableData = mssairasattar;
+      } else timetableData = [];
+    } else if (location.pathname === "/view/teacher/mr-adnan-aslam") {
+      if (mradnanaslam) {
+        timetableData = mradnanaslam;
+      } else timetableData = [];
+    } else if (location.pathname === "/view/teacher/mr-anas-bilal") {
+      if (mranasbilal) {
+        timetableData = mranasbilal;
+      } else timetableData = [];
+    } else if (location.pathname === "/view/teacher/mr-farooq") {
+      if (mrfarooq) {
+        timetableData = mrfarooq;
+      } else timetableData = [];
+    } else if (location.pathname === "/view/teacher/mr-anwar-ul-hassan") {
+      if (mranwarhassan) {
+        timetableData = mranwarhassan;
+      } else timetableData = [];
     }
   } else {
     timetableData = [];

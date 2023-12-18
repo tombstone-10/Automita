@@ -39,8 +39,32 @@ export const teachersList = [
     name: "Dr. Iqbal Murtaza",
   },
   {
+    path: "/view/teacher/ms-kanwal-batool",
+    name: "Ms. Kanwal Batool",
+  },
+  {
+    path: "/view/teacher/ms-sidra-shiekh",
+    name: "Ms. Sidra Shiekh",
+  },
+  {
+    path: "/view/teacher/ms-saira-sattar",
+    name: "Ms. Saira Sattar",
+  },
+  {
     path: "/view/teacher/mr-adnan-aslam",
     name: "Mr. Adnan Aslam",
+  },
+  {
+    path: "/view/teacher/mr-anas-bilal",
+    name: "Mr. Hafiz Anas Bilal",
+  },
+  {
+    path: "/view/teacher/mr-farooq",
+    name: "Mr. Farooq",
+  },
+  {
+    path: "/view/teacher/mr-anwar-ul-hassan",
+    name: "Mr. Anwar Hassan",
   },
 ];
 
