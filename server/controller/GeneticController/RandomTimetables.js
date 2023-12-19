@@ -15,8 +15,7 @@ function generateRandomTimetable() {
       for (const timeSlot of timeSlots) {
         timetable[day][timeSlot] = {
           teacher: teachers[Math.floor(Math.random() * teachers.length)],
-          class: classes[Math.floor(Math.random() * classes.length)],
-          course: courses[Math.floor(Math.random() * courses.length)]
+          rooms: classrooms[Math.floor(Math.random() * classrooms.length)],
         };
       }
     }
