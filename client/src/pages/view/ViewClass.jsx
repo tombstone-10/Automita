@@ -1,72 +1,63 @@
 import Tabs from "../../components/Tabs/Tabs";
 import { viewTabs } from "../../data/TabsData";
 import "./View.css";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import VerticalTabs from "../../components/Tabs/VerticalTabs";
-import gif from "../../assets/gif/profile-gif.json";
-import {
-  bsse1a,
-  bsse1b,
-  bsse3a,
-  bsse3b,
-  bsse5a,
-  bsse5b,
-  bsse7a,
-  bsse7b,
-} from "../../components/Timetable/TimetableClass";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const ViewClass = () => {
   const location = useLocation();
-  const defaultOptions = {
-    loop: true,
-    autoplay: true,
-    animationData: gif,
-    rendererSettings: {
-      preserveAspectRatio: "xMidYMid slice",
-    },
-  };
-  var timetableData = [];
-  if (location.pathname !== "/view/class") {
-    if (location.pathname == "/view/class/bsse-i-a") {
-      if (bsse1a) timetableData = bsse1a;
-      else timetableData = [];
-    } else if (location.pathname == "/view/class/bsse-i-b") {
-      if (bsse1b) timetableData = bsse1b;
-      else timetableData = [];
-    } else if (location.pathname == "/view/class/bsse-iii-a") {
-      if (bsse3a) timetableData = bsse3a;
-      else timetableData = [];
-    } else if (location.pathname == "/view/class/bsse-iii-b") {
-      if (bsse3b) timetableData = bsse3b;
-      else timetableData = [];
-    } else if (location.pathname == "/view/class/bsse-v-a") {
-      if (bsse5a) timetableData = bsse5a;
-      else timetableData = [];
-    } else if (location.pathname == "/view/class/bsse-v-b") {
-      if (bsse5b) timetableData = bsse5b;
-      else timetableData = [];
-    } else if (location.pathname == "/view/class/bsse-vii-a") {
-      if (bsse7a) timetableData = bsse7a;
-      else timetableData = [];
-    } else if (location.pathname == "/view/class/bsse-vii-b") {
-      if (bsse7b) timetableData = bsse7b;
-      else timetableData = [];
-    }
-  }
+  const id = useParams().id;
 
-  // Days and timeslots
   const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
   const timeslots = [
-    "8:00 AM",
-    "9:00 AM",
-    "10:00 AM",
-    "11:00 AM",
-    "12:00 PM",
-    "1:00 PM",
-    "2:00 PM",
-    "3:00 PM",
-    "4:00 PM",
+    "8:00AM-9:00AM",
+    "9:00AM-10:00AM",
+    "10:00AM-11:00AM",
+    "11:00AM-12:00PM",
+    "12:00PM-1:00PM",
+    "1:00PM-2:00PM",
+    "2:00PM-3:00PM",
+    "3:00PM-4:00PM",
   ];
+  var url = "";
+  const [timetableData, setTimetableData] = useState([]);
+  useEffect(() => {
+    if (id) {
+      if (location.pathname.includes("/view/room")) {
+        url = `http://localhost:5000/api/timetables/timetable-get/rooms/201265@students.au.edu.pk/${id}`;
+        axios
+          .get(url) // Initiates the GET request
+          .then((response) => {
+            setTimetableData(response.data); // Handles the successful response
+          }) // Correctly closes the 'then' block
+          .catch((error) => {
+            console.error("ERROR FETCHING DATA", error); // Handles errors
+          }); // Correctly closes the 'catch' block
+      } else if (location.pathname.includes("/view/class")) {
+        url = `http://localhost:5000/api/timetables/timetable-get/classes/201265@students.au.edu.pk/${id}`;
+        axios
+          .get(url) // Initiates the GET request
+          .then((response) => {
+            setTimetableData(response.data); // Handles the successful response
+          }) // Correctly closes the 'then' block
+          .catch((error) => {
+            console.error("ERROR FETCHING DATA", error); // Handles errors
+          }); // Correctly closes the 'catch' block
+      } else if (location.pathname.includes("/view/teacher")) {
+        url = `http://localhost:5000/api/timetables/timetable-get/teachers/201265@students.au.edu.pk/${id}`;
+        axios
+          .get(url) // Initiates the GET request
+          .then((response) => {
+            setTimetableData(response.data); // Handles the successful response
+          }) // Correctly closes the 'then' block
+          .catch((error) => {
+            console.error("ERROR FETCHING DATA", error); // Handles errors
+          }); // Correctly closes the 'catch' block
+      } else setTimetableData([]);
+    }
+  }, [id]);
 
   return (
     <>
@@ -91,11 +82,31 @@ const ViewClass = () => {
                   <td className="time-cell">{time}</td>
                   {days.map((day, dayIndex) => {
                     const classData = timetableData.find(
-                      (item) => item.day === day && item.time === time
+                      (item) => item.day === day && item.timeSlot === time
                     );
                     return (
                       <td key={dayIndex} className="class-cell">
-                        {classData ? classData.class : ""}
+                        <tr>{classData ? classData.course_assigned : ""}</tr>
+                        <tr>
+                          <td
+                            style={{
+                              fontSize: "10px",
+                              textAlign: "left",
+                              border: "none",
+                            }}
+                          >
+                            {classData ? classData.name : ""}
+                          </td>
+                          <td
+                            style={{
+                              fontSize: "10px",
+                              textAlign: "right",
+                              border: "none",
+                            }}
+                          >
+                            {classData ? classData.room : ""}
+                          </td>
+                        </tr>
                       </td>
                     );
                   })}

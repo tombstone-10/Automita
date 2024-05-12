@@ -4,6 +4,8 @@ const Course = require('../models/courseModel');
 const Rooms = require('../models/roomsModel');
 const Teacher = require('../models/teacherModel');
 const { validationResult } = require('express-validator');
+const GeneticAlgorithm = require('./genetic_algorithm/timetable');
+const Timetable = require('../models/timetableModel');
 
 
 // @Description    Add new class
@@ -169,10 +171,11 @@ const getClassesFromCourse = asyncHandler(async (req, res) => {
             if (SingleCourse) {
                 SingleCourse = await Course.populate(SingleCourse, { path: 'class_assigned', select: '_id program_name session semester section ' });
             }
-            if(SingleCourse.class_assigned){
-            res.status(200).json(SingleCourse.class_assigned);}
+            if (SingleCourse.class_assigned) {
+                res.status(200).json(SingleCourse.class_assigned);
+            }
             else {
-                res.status(404).json( 'Class not found');
+                res.status(404).json('Class not found');
             }
         }
         catch (err) {
@@ -255,7 +258,7 @@ const getRooms = asyncHandler(async (req, res) => {
 const deleteClass = asyncHandler(async (req, res) => {
     try {
         const { id } = req.body;
-        if(!id) {
+        if (!id) {
             console.log('No id provided');
             throw new Error('Invalid ID');
         }
@@ -273,10 +276,10 @@ const deleteClass = asyncHandler(async (req, res) => {
         return res.status(500).json({ message: 'Internal Server Error' });
     }
 });
-const deleteCourse = asyncHandler(async (req, res) => { 
+const deleteCourse = asyncHandler(async (req, res) => {
     try {
         const { id } = req.body;
-        if(!id) {
+        if (!id) {
             console.log('No id provided');
             throw new Error('Invalid ID');
         }
@@ -295,7 +298,7 @@ const deleteCourse = asyncHandler(async (req, res) => {
 const deleteTeacher = asyncHandler(async (req, res) => {
     try {
         const { id } = req.body;
-        if(!id) {
+        if (!id) {
             console.log('No id provided');
             throw new Error('Invalid ID');
         }
@@ -310,11 +313,11 @@ const deleteTeacher = asyncHandler(async (req, res) => {
         console.error('Error deleting item:', err.message);
         return res.status(500).json({ message: 'Internal Server Error' });
     }
- });
-const deleteRoom = asyncHandler(async (req, res) => { 
+});
+const deleteRoom = asyncHandler(async (req, res) => {
     try {
         const { id } = req.body;
-        if(!id) {
+        if (!id) {
             console.log('No id provided');
         }
         const result = await Rooms.findByIdAndRemove(id);
@@ -329,7 +332,433 @@ const deleteRoom = asyncHandler(async (req, res) => {
         return res.status(500).json({ message: 'Internal Server Error' });
     }
 });
+
+
+// Function to create a unique key for an object
+function createKey(tutor) {
+    return `${tutor.name}-${tutor.course_assigned.code}-${tutor.class_assigned._id}`;
+}
+
+
+const getTeachersAll = asyncHandler(async (email) => {
+    try {
+        const teachers = await Teacher.find({ email })
+            .select("name course_assigned class_assigned ")
+            .populate({
+                path: "course_assigned",
+                select: "name credit_hours -_id",
+            })
+            .populate({
+                path: "class_assigned",
+                select: "program_name session semester section -_id ",
+            });
+
+
+        const result = [];
+
+        await teachers.forEach((teacher) => {
+            const { _id, name, course_assigned, class_assigned } = teacher;
+
+            class_assigned.forEach((cls) => {
+                for (let i = 0; i < course_assigned.credit_hours; i++) {
+                    result.push({
+                        "_id": _id,
+                        "name": name,
+                        "course_assigned": course_assigned.name,
+                        "class_assigned": `${cls.program_name}-${cls.session}-${cls.semester}-${cls.section}`,
+                    });
+                }
+            });
+        });
+
+
+
+        return result;
+    } catch (err) {
+        console.error('Error fetching all teachers:', err.message);
+        return null;
+    }
+});
+
+const getRoomsAll = asyncHandler(async (email) => {
+    try {
+        const roomData = await Rooms.find({ email }).select("rooms -_id");
+        const rooms = await roomData.map((item) => item.rooms);
+        return rooms;
+    } catch (err) {
+        console.error("Error fetching all rooms:", err.message);
+        return null;
+    }
+});
+
+const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+const timeSlots = ["8:00AM-9:00AM", "9:00AM-10:00AM", "10:00AM-11:00AM", "11:00AM-12:00PM", "12:00PM-1:00PM", "1:00PM-2:00PM", "2:00PM-3:00PM", "3:00PM-4:00PM"];
+// const generateTimetable = asyncHandler(async (req, res) => {
+//     const { email } = req.params;
+//     if (!email || email.length === 0) {
+//         return res.status(400).json({ message: "Email is required" });
+//     }
+
+//     try {
+//         const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+//         const timeSlots = ["8:00AM-9:00AM", "9:00AM-10:00AM", "10:00AM-11:00AM", "11:00AM-12:00PM", "12:00PM-1:00PM", "1:00PM-2:00PM", "2:00PM-3:00PM", "3:00PM-4:00PM"];
+//         const populationSize = 200;
+//         const mutationRate = 0.01;
+
+//         const Teacherdata = getTeachersAll(email);
+//         if(!Teacherdata ||Teacherdata.length === 0){
+//             return res.status(404).json({ message: "No teachers found" });
+//         }
+//         const Roomsdata = getRoomsAll(email); // Fetch room data
+//         if(!Roomsdata ||Roomsdata.length === 0){
+//             return res.status(404).json({ message: "No Rooms found" });
+//         }
+//         const geneticAlgorithm = new GeneticAlgorithm(
+//             populationSize,
+//             Teacherdata,
+//             Roomsdata,
+//             daysOfWeek,
+//             timeSlots
+//         );
+
+//         const maxGenerations = 100;
+//         let optimalTimetable = null;
+//         let generationForOptimalTimetable = null;
+
+
+//         for (let generation = 0; generation < maxGenerations; generation++) {
+//             geneticAlgorithm.evolve(); // Evolve the population
+//             const bestIndividual = geneticAlgorithm.getBest();
+
+//             if (bestIndividual.fitness >= 100) { // If an optimal solution is found
+//                 optimalTimetable = bestIndividual;
+//                 generationForOptimalTimetable = generation;
+//                 break; // Exit the loop
+//             }
+//         }
+
+//         if (optimalTimetable) {
+//             return res.status(200).json({
+//                 message: "Optimal timetable generated successfully!",
+//                 fitness: optimalTimetable.fitness,
+//                 generation: generationForOptimalTimetable,
+//                 timetable: optimalTimetable.genes, // Return the optimal timetable
+//             });
+//         } else {
+//             return res.status(204).json({ message: "No optimal timetable found." }); // No content found
+//         }
+//     } catch (error) {
+//         console.error("Error during initialization:", error);
+//         return res.status(500).json({ message: "Internal Server Error" }); // Return 500 for server errors
+//     }
+// });
+const generateTimetable = asyncHandler(async (req, res) => {
+    const { email } = req.params;
+    if (!email || email.length === 0) {
+        return res.status(400).json({ message: "Email is required" });
+    }
+
+    try {
+
+        const populationSize = 200;
+
+
+        const [Teacherdata, Roomsdata] = await Promise.all([
+            getTeachersAll(email), // Ensure these functions are asynchronous and return valid data
+            getRoomsAll(email),
+        ]);
+        if (!Teacherdata || Teacherdata.length === 0) {
+            return res.status(404).json({ message: "No teachers found" });
+        }
+        if (!Roomsdata || Roomsdata.length === 0) {
+            return res.status(404).json({ message: "No Rooms found" });
+        }
+        if (Roomsdata.length * 8 * 5 <= Teacherdata.length) {
+            return res.status(404).json({ message: "ClassRooms are not enough to handle all the classes" });
+        }
+        const geneticAlgorithm = new GeneticAlgorithm(
+            populationSize,
+            Teacherdata,
+            Roomsdata,
+            daysOfWeek,
+            timeSlots
+        );
+
+
+
+
+        const maxGenerations = 10000;
+        let optimalTimetable = null;
+        let generationForOptimalTimetable = null;
+
+        for (let generation = 0; generation < maxGenerations; generation++) {
+            geneticAlgorithm.evolve(); // Evolve the population
+            const bestIndividual = geneticAlgorithm.getBest();
+
+            if (bestIndividual.fitness >= 100) { // If an optimal solution is found
+                optimalTimetable = bestIndividual;
+                generationForOptimalTimetable = generation;
+                break; // Exit the loop
+            }
+            console.log("Generation:", generation + " Fitness: ", bestIndividual.fitness);
+        }
+
+        if (optimalTimetable) {
+            try {
+                const timetableExists = await Timetable.findOne({
+                    email: email,
+                });
+                if (timetableExists) {
+                    await timetableExists.deleteOne();
+                }
+                const timetable = new Timetable({
+                    email: email,
+                    timetable: optimalTimetable.genes,
+                });
+                await timetable.save();
+            } catch (err) {
+                console.log("Error in saving timetable", err);
+                res.status(500).json({ message: "Internal Server Error" });
+            }
+
+
+            console.log("Optimal timetable generated successfully!");
+            console.log("Fitness:", optimalTimetable.fitness);
+            console.log("Generation:", generationForOptimalTimetable);
+
+
+            return res.status(200).json({
+                message: "Optimal timetable generated successfully!",
+                fitnessOfOptimalTimetable: optimalTimetable.fitness,
+            });
+        } else {
+            return res.status(400).json({ message: "No optimal timetable found." });
+        }
+    } catch (error) {
+        console.error("Error during initialization:", error);
+        return res.status(500).json({ message: "Internal Server Error" });
+    }
+});
+
+const getTimetable = asyncHandler(async (req, res) => {
+    const { email } = req.params;
+    if (!email)
+        res.status(404).json({ message: "Email is required" });
+    try {
+        const timetable = await Timetable.findOne({
+            email: email,
+        });
+        if (!timetable) {
+            return res.status(404).json({ message: "Timetable not found" });
+        }
+        function sortByDayAndRoom(a, b) {
+            const dayComparison = daysOfWeek.indexOf(a.day) - daysOfWeek.indexOf(b.day);
+
+            if (dayComparison !== 0) {
+                return dayComparison; // If days are different, sort by day
+            }
+
+            // If days are the same, sort by room
+            if (a.room < b.room) {
+                return -1;
+            } else if (a.room > b.room) {
+                return 1;
+            } else {
+                return 0; // Same day and room
+            }
+        }
+        const sortedTimetable = timetable.timetable.sort(sortByDayAndRoom);
+        return res.status(200).json(
+            sortedTimetable,
+        );
+    } catch (err) {
+        console.log("Error in getting timetable", err);
+        res.status(500).json({ message: "Internal Server Error" });
+
+    }
+});
+
+
+const getAllTeachers = asyncHandler(async (req, res) => {
+    const { email } = req.params;
+    try {
+        if (!email)
+            res.status(404).json({ message: "Email is required" });
+        const teachers = await Teacher.find({ email }).select("name -_id");
+
+        const output = new Set();
+        teachers.forEach((item) => {
+            output.add(item.name);
+        });
+        return res.status(200).json(
+            Array.from(output).sort(),
+        );
+    }
+    catch (err) {
+        console.log("Error in getting teachers", err);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+
+});
+const getAllClasses = asyncHandler(async (req, res) => {
+    const { email } = req.params;
+    try {
+        if (!email)
+            res.status(404).json({ message: "Email is required" });
+        const cls = await Class.find({ email }).select("program_name session semester section -_id");
+        const output = new Set();
+        if (!cls) {
+            return res.status(404).json({ message: "No classes found" });
+        }
+        cls.forEach((item) => {
+            output.add(`${item.program_name}-${item.session}-${item.semester}-${item.section}`);
+        });
+
+        return res.status(200).json(
+            Array.from(output).sort()
+        );
+    }
+    catch (err) {
+        console.log("Error in getting teachers", err);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+});
+const getAllCourses = asyncHandler(async (req, res) => {
+    const { email } = req.params;
+    try {
+        if (!email)
+            res.status(404).json({ message: "Email is required" });
+        const courses = await Course.find({ email }).select("name -_id");
+        if (!courses) {
+            return res.status(404).json({ message: "No courses found" });
+        }
+        const output = [];
+        courses.forEach((item) => {
+            output.push(item.name);
+        });
+        return res.status(200).json(
+            output.sort()
+        );
+    }
+    catch (err) {
+        console.log("Error in getting teachers", err);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+});
+const getAllRooms = asyncHandler(async (req, res) => {
+    const { email } = req.params;
+    try {
+        if (!email)
+            res.status(404).json({ message: "Email is required" });
+        const rooms = await Rooms.find({ email }).select("rooms -_id");
+        if (!rooms) {
+            return res.status(404).json({ message: "No rooms found" });
+        }
+        const output = new Set();;
+        rooms.forEach((item) => {
+            output.add(item.rooms);
+        });
+        return res.status(200).json(
+            Array.from(output).sort()
+        );
+    }
+    catch (err) {
+        console.log("Error in getting rooms", err);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+});
+
+const TeacherTimetableByNames = asyncHandler(async (req, res) => {
+    const { email, name } = req.params;
+    if (!email || !name) {
+        return res.status(400).json({ message: "Email and name are required" });
+    }
+    try {
+        const timetable = await Timetable.findOne({
+            email: email,
+        });
+        if (!timetable) {
+            return res.status(404).json({ message: "Timetable not found" });
+        }
+        const filteredTimetable = timetable.timetable.filter((item) => item.name === name);
+        return res.status(200).json(
+            filteredTimetable,
+        );
+    } catch (err) {
+        console.log("Error in getting timetable", err);
+        res.status(500).json({ message: "Internal Server Error" });
+
+    }
+});
+const ClassTimetableByNames = asyncHandler(async (req, res) => {
+    const { email, name } = req.params;
+
+    // Check for missing parameters
+    if (!email || !name) {
+        return res.status(400).json({ message: "Email and name are required" });
+    }
+
+    try {
+        // Find the timetable for the given email
+        const timetable = await Timetable.findOne({
+            email,
+        });
+
+        if (!timetable) {
+            return res.status(404).json({ message: "Timetable not found" });
+        }
+
+        // Filter the timetable for items with class_assigned matching the name parameter
+        const filteredTimetable = timetable.timetable.filter(
+            (item) => item.class_assigned === name
+        );
+
+        // Return the filtered timetable
+        return res.status(200).json(filteredTimetable);
+
+    } catch (err) {
+        console.error("Error in getting timetable", err);
+        return res.status(500).json({ message: "Internal Server Error" });
+    }
+});
+
+const RoomTimetableByNames = asyncHandler(async (req, res) => {
+    const { email, name } = req.params;
+
+    // Check for missing parameters
+    if (!email || !name) {
+        return res.status(400).json({ message: "Email and name are required" });
+    }
+
+    try {
+        // Find the timetable for the given email
+        const timetable = await Timetable.findOne({
+            email,
+        });
+
+        if (!timetable) {
+            return res.status(404).json({ message: "Timetable not found" });
+        }
+
+        // Filter the timetable for items with class_assigned matching the name parameter
+        const filteredTimetable = timetable.timetable.filter(
+            (item) => item.room === name
+        );
+
+        // Return the filtered timetable
+        return res.status(200).json(filteredTimetable);
+
+    } catch (err) {
+        console.error("Error in getting timetable", err);
+        return res.status(500).json({ message: "Internal Server Error" });
+    }
+});
+
+
+
+
 module.exports = {
     addClass, addCourse, addTeacher, getCourses, getClasses, getTeachers, getClassesFromCourse, addrooms, getRooms,
-    deleteClass, deleteCourse, deleteTeacher, deleteRoom
+    deleteClass, deleteCourse, deleteTeacher, deleteRoom, generateTimetable, getTimetable, getAllTeachers, getAllClasses, getAllCourses, getAllRooms,
+    TeacherTimetableByNames, ClassTimetableByNames, RoomTimetableByNames
 }

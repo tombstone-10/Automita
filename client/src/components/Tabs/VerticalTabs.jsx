@@ -1,20 +1,63 @@
-import { classesList, roomsList } from "../../data/ViewListData";
-import { teachersList } from "../../data/ViewListData";
+import { useEffect, useState } from "react";
 import "./VerticalTabs.css";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import axios from "axios";
 
 const VerticalTabs = ({ parentName }) => {
+  const [allTeachers, setAllTeachers] = useState([]);
+  const [allClasses, setAllClasses] = useState([]);
+  const [allRooms, setAllRooms] = useState([]);
+  const urlTeacher =
+    "http://localhost:5000/api/timetables/teachers-get/201265@students.au.edu.pk";
+  const urlClass =
+    "http://localhost:5000/api/timetables/classes-get/201265@students.au.edu.pk";
+  const urlRoom =
+    "http://localhost:5000/api/timetables/rooms-get/201265@students.au.edu.pk";
+  useEffect(() => {
+    if (parentName == "class") {
+      axios
+        .get(urlClass)
+        .then((response) => {
+          setAllClasses(response.data);
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+        });
+    } else if (parentName == "teacher") {
+      axios
+        .get(urlTeacher)
+        .then((response) => {
+          setAllTeachers(response.data);
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+        });
+    } else if (parentName == "room") {
+      axios
+        .get(urlRoom)
+        .then((response) => {
+          setAllRooms(response.data);
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+        });
+    }
+  }, [parentName]);
   return (
     <>
       {parentName == "class" && (
         <div className="view-container">
           <div className="list-left-panel">
-            {classesList.map((list, index) => {
+            {allClasses.map((list, index) => {
               return (
                 <>
                   <div className="list-row">
-                    <NavLink to={list.path} key={index} className="list-text">
-                      <div className="list">{list.name}</div>
+                    <NavLink
+                      to={`/view/class/${list}`}
+                      key={index}
+                      className="list-text"
+                    >
+                      <div className="list">{list}</div>
                     </NavLink>
                   </div>
                 </>
@@ -27,12 +70,16 @@ const VerticalTabs = ({ parentName }) => {
       {parentName == "teacher" && (
         <div className="view-container">
           <div className="list-left-panel">
-            {teachersList.map((list, index) => {
+            {allTeachers.map((list, index) => {
               return (
                 <>
                   <div className="list-row">
-                    <NavLink to={list.path} key={index} className="list-text">
-                      <div className="list">{list.name}</div>
+                    <NavLink
+                      to={`/view/teacher/${list}`}
+                      key={index}
+                      className="list-text"
+                    >
+                      <div className="list">{list}</div>
                     </NavLink>
                   </div>
                 </>
@@ -45,12 +92,16 @@ const VerticalTabs = ({ parentName }) => {
       {parentName == "room" && (
         <div className="view-container">
           <div className="list-left-panel">
-            {roomsList.map((list, index) => {
+            {allRooms.map((list, index) => {
               return (
                 <>
                   <div className="list-row">
-                    <NavLink to={list.path} key={index} className="list-text">
-                      <div className="list">{list.name}</div>
+                    <NavLink
+                      to={`/view/room/${list}`}
+                      key={index}
+                      className="list-text"
+                    >
+                      <div className="list">{list}</div>
                     </NavLink>
                   </div>
                 </>

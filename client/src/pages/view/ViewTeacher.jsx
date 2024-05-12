@@ -1,82 +1,64 @@
 import Tabs from "../../components/Tabs/Tabs";
 import { viewTabs } from "../../data/TabsData";
 import "./View.css";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import VerticalTabs from "../../components/Tabs/VerticalTabs";
-import Lottie from "react-lottie";
-import gif from "../../assets/gif/profile-gif.json";
-import {
-  bsse1a,
-  bsse1b,
-  bsse3a,
-  bsse3b,
-  bsse5a,
-  bsse5b,
-  bsse7a,
-  bsse7b,
-} from "../../components/Timetable/TimetableClass";
-import {
-  driqbalmurtaza,
-  mradnanaslam,
-  mranasbilal,
-  mranwarhassan,
-  mrfarooq,
-  mskanwalbatool,
-  mssairasattar,
-  mssidrashiekh,
-} from "../../components/Timetable/TimetableTeacher";
+import { useEffect, useState } from "react";
+import axios from "axios";
+
 const ViewTeacher = () => {
   const location = useLocation();
+  const id = useParams().id;
+
   const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
   const timeslots = [
-    "8:00 AM",
-    "9:00 AM",
-    "10:00 AM",
-    "11:00 AM",
-    "12:00 PM",
-    "1:00 PM",
-    "2:00 PM",
-    "3:00 PM",
-    "4:00 PM",
+    "8:00AM-9:00AM",
+    "9:00AM-10:00AM",
+    "10:00AM-11:00AM",
+    "11:00AM-12:00PM",
+    "12:00PM-1:00PM",
+    "1:00PM-2:00PM",
+    "2:00PM-3:00PM",
+    "3:00PM-4:00PM",
   ];
-  var timetableData = [];
-  if (location.pathname !== "/view/teacher") {
-    if (location.pathname === "/view/teacher/dr-iqbal-murtaza") {
-      if (driqbalmurtaza) {
-        timetableData = driqbalmurtaza;
-      } else timetableData = [];
-    } else if (location.pathname === "/view/teacher/ms-kanwal-batool") {
-      if (mskanwalbatool) {
-        timetableData = mskanwalbatool;
-      } else timetableData = [];
-    } else if (location.pathname === "/view/teacher/ms-sidra-shiekh") {
-      if (mssidrashiekh) {
-        timetableData = mssidrashiekh;
-      } else timetableData = [];
-    } else if (location.pathname === "/view/teacher/ms-saira-sattar") {
-      if (mssairasattar) {
-        timetableData = mssairasattar;
-      } else timetableData = [];
-    } else if (location.pathname === "/view/teacher/mr-adnan-aslam") {
-      if (mradnanaslam) {
-        timetableData = mradnanaslam;
-      } else timetableData = [];
-    } else if (location.pathname === "/view/teacher/mr-anas-bilal") {
-      if (mranasbilal) {
-        timetableData = mranasbilal;
-      } else timetableData = [];
-    } else if (location.pathname === "/view/teacher/mr-farooq") {
-      if (mrfarooq) {
-        timetableData = mrfarooq;
-      } else timetableData = [];
-    } else if (location.pathname === "/view/teacher/mr-anwar-ul-hassan") {
-      if (mranwarhassan) {
-        timetableData = mranwarhassan;
-      } else timetableData = [];
+
+  var url = "";
+  const [timetableData, setTimetableData] = useState([]);
+  useEffect(() => {
+    if (id) {
+      if (location.pathname.includes("/view/room")) {
+        url = `http://localhost:5000/api/timetables/timetable-get/rooms/201265@students.au.edu.pk/${id}`;
+        axios
+          .get(url) // Initiates the GET request
+          .then((response) => {
+            setTimetableData(response.data); // Handles the successful response
+          }) // Correctly closes the 'then' block
+          .catch((error) => {
+            console.error("ERROR FETCHING DATA", error); // Handles errors
+          }); // Correctly closes the 'catch' block
+      } else if (location.pathname.includes("/view/class")) {
+        url = `http://localhost:5000/api/timetables/timetable-get/classes/201265@students.au.edu.pk/${id}`;
+        axios
+          .get(url) // Initiates the GET request
+          .then((response) => {
+            setTimetableData(response.data); // Handles the successful response
+          }) // Correctly closes the 'then' block
+          .catch((error) => {
+            console.error("ERROR FETCHING DATA", error); // Handles errors
+          }); // Correctly closes the 'catch' block
+      } else if (location.pathname.includes("/view/teacher")) {
+        url = `http://localhost:5000/api/timetables/timetable-get/teachers/201265@students.au.edu.pk/${id}`;
+        axios
+          .get(url) // Initiates the GET request
+          .then((response) => {
+            setTimetableData(response.data); // Handles the successful response
+          }) // Correctly closes the 'then' block
+          .catch((error) => {
+            console.error("ERROR FETCHING DATA", error); // Handles errors
+          }); // Correctly closes the 'catch' block
+      } else setTimetableData([]);
     }
-  } else {
-    timetableData = [];
-  }
+  }, [id]);
 
   return (
     <>
@@ -101,11 +83,31 @@ const ViewTeacher = () => {
                   <td className="time-cell">{time}</td>
                   {days.map((day, dayIndex) => {
                     const classData = timetableData.find(
-                      (item) => item.day === day && item.time === time
+                      (item) => item.day === day && item.timeSlot === time
                     );
                     return (
                       <td key={dayIndex} className="class-cell">
-                        {classData ? classData.class : ""}
+                        <tr>{classData ? classData.course_assigned : ""}</tr>
+                        <tr>
+                          <td
+                            style={{
+                              fontSize: "10px",
+                              textAlign: "left",
+                              border: "none",
+                            }}
+                          >
+                            {classData ? classData.class_assigned : ""}
+                          </td>
+                          <td
+                            style={{
+                              fontSize: "10px",
+                              textAlign: "right",
+                              border: "none",
+                            }}
+                          >
+                            {classData ? classData.room : ""}
+                          </td>
+                        </tr>
                       </td>
                     );
                   })}
