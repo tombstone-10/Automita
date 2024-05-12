@@ -3,20 +3,20 @@ import { useNavigate } from "react-router-dom";
 import Add from "../../components/Add/Add";
 import Tabs from "../../components/Tabs/Tabs";
 import { generateTabs } from "../../data/TabsData";
-import Box from "@mui/material/Box";
-import Modal from "@mui/material/Modal";
-import Typography from "@mui/material/Typography";
+import Box from '@mui/material/Box';
+import Modal from '@mui/material/Modal';
+import Typography from '@mui/material/Typography';
 import Loading from "../../components/Loading";
 import axios from "axios";
 
 const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
   width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
   boxShadow: 24,
   p: 4,
 };
@@ -26,7 +26,7 @@ const AddClass = () => {
   const [dotCount, setDotCount] = useState(0); // State to track dot count
   const [response, setResponse] = useState(false);
   const navigate = useNavigate(); // To enable redirection
-
+  
   // Animation interval for dots
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -38,28 +38,27 @@ const AddClass = () => {
   // Backend request to generate timetable
   useEffect(() => {
     if (open && !response) {
-      const url =
-        "http://localhost:5000/api/timetables/generate/201265@students.au.edu.pk";
-      axios
-        .get(url)
-        .then((response) => {
+      const url = "http://localhost:5000/api/timetables/generate/201271@students.au.edu.pk";
+      axios.get(url)
+        .then(response => {
           if (response.status === 200) {
             setResponse(true); // Set response to true if successful
           }
         })
-        .catch((error) => {
+        .catch(error => {
           console.error("Error during generation:", error);
         });
     }
-  }, [open, response]);
-
+  }, [open, response]); 
+  
+  
   useEffect(() => {
     if (response) {
       setTimeout(() => {
-        navigate("/view");
-      }, 3000);
+        navigate("/view"); 
+      }, 3000); 
     }
-  }, [response, navigate]);
+  }, [response, navigate]); 
 
   return (
     <div className="scroll-container">
@@ -75,35 +74,20 @@ const AddClass = () => {
         >
           {response ? (
             <Box sx={style}>
-              <Typography
-                id="keep-mounted-modal-title"
-                variant="h6"
-                component="h2"
-              >
+              <Typography id="keep-mounted-modal-title" variant="h6" component="h2">
                 TimeTable Generated
               </Typography>
-              <Typography
-                id="keep-mounted-modal-description"
-                sx={{ mt: 2, ml: 18 }}
-              >
+              <Typography id="keep-mounted-modal-description" sx={{ mt: 2, ml: 18 }}>
                 You are redirecting to View Page...
               </Typography>
             </Box>
           ) : (
             <Box sx={style}>
-              <Typography
-                id="keep-mounted-modal-title"
-                variant="h6"
-                component="h2"
-              >
+              <Typography id="keep-mounted-modal-title" variant="h6" component="h2">
                 <Loading />
               </Typography>
-              <Typography
-                id="keep-mounted-modal-description"
-                sx={{ mt: 2, ml: 18 }}
-              >
-                Generating {".".repeat(dotCount)}{" "}
-                {/* Display the animated dots */}
+              <Typography id="keep-mounted-modal-description" sx={{ mt: 2, ml: 18 }}>
+                Generating {'.'.repeat(dotCount)} {/* Display the animated dots */}
               </Typography>
             </Box>
           )}

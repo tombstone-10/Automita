@@ -42,11 +42,12 @@ const Add = ({ parentName }) => {
   const [prevselectedCoursesTeachers, setprevSelectedCoursesTeachers] =
     useState(null); // to check if the course changes in ADD TEACHERS
   const [rooms, setRooms] = useState(null);
-
+  
   // function responsible for opening and closing modal
   const toggleModal = () => {
     setModal(!modal);
   };
+
 
   const [assignClassesForTeachers, setassignClassesForTeachers] = useState([]);
   if (selectedCoursesTeachers !== prevselectedCoursesTeachers) {
@@ -83,7 +84,7 @@ const Add = ({ parentName }) => {
     id: course._id,
     value: `${course.code}`,
     label: `${course.code}`,
-    credit_hours: ` ${course.credit_hours}`,
+    credit_hours: ` ${course.credit_hours}`
   }));
 
   const handleProgramNameChange = (event) => {
@@ -464,15 +465,13 @@ const Add = ({ parentName }) => {
                       isSearchable
                       value={selectedClassesTeachers}
                       onChange={handleClassesSelectChangeForTeachers}
-                      isDisabled={
-                        MaximumSlots &&
-                        MaximumSlots > 0 &&
-                        selectedClassesTeachers.length >= MaximumSlots
-                      }
+                      isDisabled={MaximumSlots && MaximumSlots >0 &&selectedClassesTeachers.length >= MaximumSlots}
                     />
                   </div>
                 </>
-              ) : null}
+              ) : (
+                null
+              )}
               <div className="add-form-row">
                 <button onClick={toggleModal}>Close</button>
                 <button type="submit">Submit</button>
