@@ -36,15 +36,18 @@ const Add = ({ parentName }) => {
   const [creditHours, setCreditHours] = useState("");
   const [selectedClasses, setSelectedClasses] = useState([]);
   const [TeacherName, setTeacherName] = useState("");
-  const [selectedClassesTeachers, setSelectedClassesTeachers] = useState(null);
-  const [selectedCoursesTeachers, setSelectedCoursesTeachers] = useState(null);
+  const [MaximumSlots, setMaximumSlots] = useState(0);
+  const [selectedClassesTeachers, setSelectedClassesTeachers] = useState([]);
+  const [selectedCoursesTeachers, setSelectedCoursesTeachers] = useState([]);
   const [prevselectedCoursesTeachers, setprevSelectedCoursesTeachers] =
     useState(null); // to check if the course changes in ADD TEACHERS
   const [rooms, setRooms] = useState(null);
+
   // function responsible for opening and closing modal
   const toggleModal = () => {
     setModal(!modal);
   };
+
   const [assignClassesForTeachers, setassignClassesForTeachers] = useState([]);
   if (selectedCoursesTeachers !== prevselectedCoursesTeachers) {
     let somefunction = async () => {
@@ -80,6 +83,7 @@ const Add = ({ parentName }) => {
     id: course._id,
     value: `${course.code}`,
     label: `${course.code}`,
+    credit_hours: ` ${course.credit_hours}`,
   }));
 
   const handleProgramNameChange = (event) => {
@@ -184,9 +188,15 @@ const Add = ({ parentName }) => {
   };
   const handleCoursesSelectChangeForTeachers = (selectedOptions) => {
     setSelectedCoursesTeachers(selectedOptions);
+    setSelectedClassesTeachers([]);
   };
   const handleTeacherNameChange = (e) => {
     setTeacherName(e.target.value);
+  };
+  const handleMaximumSlotsChange = (e) => {
+    setMaximumSlots(e.target.value);
+    setSelectedClassesTeachers([]);
+    setSelectedCoursesTeachers([]);
   };
   const hanldeTeacherAddition = async (e) => {
     e.preventDefault();
@@ -379,6 +389,8 @@ const Add = ({ parentName }) => {
                   placeholder="Enter credit hours"
                   name="creditHours"
                   value={creditHours}
+                  min={1}
+                  max={6}
                   onChange={handleCreditHoursChnage}
                   id="creditHours"
                 />
@@ -419,28 +431,48 @@ const Add = ({ parentName }) => {
                   onChange={handleTeacherNameChange}
                 />
               </div>
-
               <div className="add-form-row">
-                <label htmlFor="assignToCourse">Assign to Course(s)</label>
-                <Select
-                  className="multi-select-dropdown"
-                  options={assignCourses}
-                  isSearchable={isSearchable}
-                  value={selectedCoursesTeachers}
-                  onChange={handleCoursesSelectChangeForTeachers}
+                <label htmlFor="teacherName">Maximum Slots</label>
+                <input
+                  type="number"
+                  placeholder="Enter maximum slots teacher can take"
+                  value={MaximumSlots}
+                  name="maximumSlots"
+                  id="maximumSlots"
+                  min={1}
+                  onChange={handleMaximumSlotsChange}
                 />
               </div>
-              <div className="add-form-row">
-                <label htmlFor="assignToClass">Assign to Class(es)</label>
-                <Select
-                  className="multi-select-dropdown"
-                  options={assignClassesForTeachers}
-                  isMulti
-                  isSearchable={isSearchable}
-                  value={selectedClassesTeachers}
-                  onChange={handleClassesSelectChangeForTeachers}
-                />
-              </div>
+              {MaximumSlots > 0 ? (
+                <>
+                  <div className="add-form-row">
+                    <label htmlFor="assignToCourse">Assign to Course(s)</label>
+                    <Select
+                      className="multi-select-dropdown"
+                      options={assignCourses}
+                      isSearchable={isSearchable}
+                      value={selectedCoursesTeachers}
+                      onChange={handleCoursesSelectChangeForTeachers}
+                    />
+                  </div>
+                  <div className="add-form-row">
+                    <label htmlFor="assignToClass">Assign to Class(es)</label>
+                    <Select
+                      className="multi-select-dropdown"
+                      options={assignClassesForTeachers}
+                      isMulti
+                      isSearchable
+                      value={selectedClassesTeachers}
+                      onChange={handleClassesSelectChangeForTeachers}
+                      isDisabled={
+                        MaximumSlots &&
+                        MaximumSlots > 0 &&
+                        selectedClassesTeachers.length >= MaximumSlots
+                      }
+                    />
+                  </div>
+                </>
+              ) : null}
               <div className="add-form-row">
                 <button onClick={toggleModal}>Close</button>
                 <button type="submit">Submit</button>

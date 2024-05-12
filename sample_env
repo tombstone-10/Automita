@@ -1,0 +1,4 @@
+NODE_ENV = development
+port = 5000
+JWT_SECRET = <JWT_SECRET>
+MongoURI = <MongoConnectURI>
