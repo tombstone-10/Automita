@@ -204,7 +204,7 @@ const Login = () => {
                 <button type="submit" onClick={handleClick}>
                   Login
                 </button>
-                <a href="#">Forgot Password?</a>
+                {/* <a href="#">Forgot Password?</a> */}
               </span>
             </form>
           </div>

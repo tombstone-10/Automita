@@ -7,12 +7,9 @@ const VerticalTabs = ({ parentName }) => {
   const [allTeachers, setAllTeachers] = useState([]);
   const [allClasses, setAllClasses] = useState([]);
   const [allRooms, setAllRooms] = useState([]);
-  const urlTeacher =
-    "http://localhost:5000/api/timetables/teachers-get/201265@students.au.edu.pk";
-  const urlClass =
-    "http://localhost:5000/api/timetables/classes-get/201265@students.au.edu.pk";
-  const urlRoom =
-    "http://localhost:5000/api/timetables/rooms-get/201265@students.au.edu.pk";
+  const urlTeacher = "http://localhost:5000/api/timetables/teachers-get/201271@students.au.edu.pk";
+  const urlClass = "http://localhost:5000/api/timetables/classes-get/201271@students.au.edu.pk";
+  const urlRoom = "http://localhost:5000/api/timetables/rooms-get/201271@students.au.edu.pk";
   useEffect(() => {
     if (parentName == "class") {
       axios
@@ -23,7 +20,8 @@ const VerticalTabs = ({ parentName }) => {
         .catch((error) => {
           console.error("Error fetching data:", error);
         });
-    } else if (parentName == "teacher") {
+    }
+    else if (parentName == "teacher") {
       axios
         .get(urlTeacher)
         .then((response) => {
@@ -32,7 +30,8 @@ const VerticalTabs = ({ parentName }) => {
         .catch((error) => {
           console.error("Error fetching data:", error);
         });
-    } else if (parentName == "room") {
+    }
+    else if (parentName == "room") {
       axios
         .get(urlRoom)
         .then((response) => {
@@ -42,6 +41,7 @@ const VerticalTabs = ({ parentName }) => {
           console.error("Error fetching data:", error);
         });
     }
+
   }, [parentName]);
   return (
     <>
@@ -52,11 +52,7 @@ const VerticalTabs = ({ parentName }) => {
               return (
                 <>
                   <div className="list-row">
-                    <NavLink
-                      to={`/view/class/${list}`}
-                      key={index}
-                      className="list-text"
-                    >
+                    <NavLink to={`/view/class/${list}`} key={index} className="list-text">
                       <div className="list">{list}</div>
                     </NavLink>
                   </div>
@@ -74,11 +70,7 @@ const VerticalTabs = ({ parentName }) => {
               return (
                 <>
                   <div className="list-row">
-                    <NavLink
-                      to={`/view/teacher/${list}`}
-                      key={index}
-                      className="list-text"
-                    >
+                    <NavLink to={`/view/teacher/${list}`} key={index} className="list-text">
                       <div className="list">{list}</div>
                     </NavLink>
                   </div>
@@ -96,11 +88,7 @@ const VerticalTabs = ({ parentName }) => {
               return (
                 <>
                   <div className="list-row">
-                    <NavLink
-                      to={`/view/room/${list}`}
-                      key={index}
-                      className="list-text"
-                    >
+                    <NavLink to={`/view/room/${list}`} key={index} className="list-text">
                       <div className="list">{list}</div>
                     </NavLink>
                   </div>
