@@ -184,7 +184,7 @@ const Login = () => {
                     onChange={(e) => setPassword(e.target.value)}
                     className="form-input"
                   />
-                  <span class="password-toggle" onClick={handleToggle}>
+                  <span class="password-toggle" onClick={handleToggle}> 
                     {icon}
                   </span>
                 </div>
